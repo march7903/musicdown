@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest]
+        os: [windows-latest, ubuntu-latest, macos-latest]
         arch: [x64]
 
     runs-on: ${{ matrix.os }}
@@ -67,30 +67,55 @@ jobs:
           cat $GITHUB_OUTPUT
 
       - name: Build Executable(Windows)
+        if: ${{ runner.os == 'Windows' }}
         uses: Nuitka/Nuitka-Action@main
         with:
           nuitka-version: main
           script-name: main.py
-          
+
           mode: standalone
           enable-plugins: pyqt6
           product-name: "musicdown"
           file-version: ${{ steps.info.outputs.version }}
           product-version: ${{ steps.info.outputs.version }}
           copyright: ${{ steps.info.outputs.copyright }}
-          
+
           windows-icon-from-ico: "ui/icon.ico"
           mingw64: true
           windows-disable-console: true
-          
+
           include-package: utils,ui,api,decryptor,downloader
 
-      - name: Compress exe
+      - name: Build Executable(Unix)
+        if: ${{ runner.os != 'Windows' }}
+        uses: Nuitka/Nuitka-Action@main
+        with:
+          nuitka-version: main
+          script-name: main.py
+
+          mode: standalone
+          enable-plugins: pyqt6
+          product-name: "musicdown"
+          file-version: ${{ steps.info.outputs.version }}
+          product-version: ${{ steps.info.outputs.version }}
+          copyright: ${{ steps.info.outputs.copyright }}
+
+          include-package: utils,ui,api,decryptor,downloader
+
+      - name: Compress exe (Windows)
         if: ${{ runner.os == 'Windows' }}
         run: |
           Rename-Item -Path "build/main.dist" -NewName "musicdown"
           cd build
           7z a -tzip -mx=9 ../upload/musicdown-${{ steps.info.outputs.version }}-windows-${{ steps.arch.outputs.arch }}.zip musicdown
+
+      - name: Compress exe (Unix)
+        if: ${{ runner.os != 'Windows' }}
+        shell: bash
+        run: |
+          mv build/main.dist musicdown
+          cd build
+          zip -r ../upload/musicdown-${{ steps.info.outputs.version }}-${{ runner.os }}-${{ steps.arch.outputs.arch }}.zip musicdown
 
       - name: Upload
         uses: actions/upload-artifact@v4

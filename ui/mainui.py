@@ -344,6 +344,9 @@ class QQMusicDownloaderGUI(QMainWindow):
         # 注册日志处理器
         self.setup_logger()
 
+        # 检查登录状态并自动刷新凭据
+        self.check_login_status()
+
     def initUI(self):
         """初始化UI"""
         self.setWindowTitle("QQ音乐下载器")
@@ -636,6 +639,24 @@ class QQMusicDownloaderGUI(QMainWindow):
             cursor = self.log_text.textCursor()
             cursor.movePosition(QTextCursor.MoveOperation.End)
             self.log_text.setTextCursor(cursor)
+
+    def check_login_status(self):
+        """启动时检查并刷新登录凭据"""
+        try:
+            import asyncio
+
+            valid = asyncio.run(self.api.validate_credential())
+            if not valid:
+                QMessageBox.information(
+                    self,
+                    "登录失效",
+                    "登录凭据无效或已过期，请重新登录。",
+                )
+                self.show_login_dialog()
+        except Exception as e:
+            QMessageBox.warning(
+                self, "错误", f"检查登录状态时发生错误: {str(e)}"
+            )
 
     def clear_log(self):
         """清除日志显示"""

@@ -53,6 +53,9 @@ class QQMusicAPI:
             return False
 
         try:
+            # 为确保在新的事件循环中调用时不会复用旧的 Session
+            from qqmusic_api.utils.session import clear_session
+            clear_session()
             if await self.credential.is_expired():
                 logger.warning("凭证已过期，尝试自动刷新...")
                 if await self.credential.can_refresh():

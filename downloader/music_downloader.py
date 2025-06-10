@@ -11,7 +11,7 @@ from mutagen.mp4 import MP4, MP4Cover
 from mutagen.oggopus import OggOpus
 from mutagen.oggvorbis import OggVorbis
 
-from api.qm import QQMusicAPI
+from api.qqmusic import QQMusicAPI
 from downloader.downloader import DownloadManager
 from utils.formatters import format_singers, get_file_path, parse_lrc_lyrics
 from utils.logger import logger
@@ -21,7 +21,7 @@ class MusicDownloader:
     """音乐下载器，处理歌曲下载、封面和歌词嵌入、重命名等功能"""
 
     def __init__(self):
-        self.qq_music_api = QQMusicAPI()
+        self.qq_music_api = QQMusicAPI()  # 使用新的统一API
         self.download_manager = DownloadManager()
         self.log = logger.log_progress
 
@@ -32,7 +32,7 @@ class MusicDownloader:
             song_info: 歌曲信息字典
             download_dir: 下载目录
             filetype: 文件类型 ('m4a'/'128'/'320'/'flac/ATMOS_51/ATMOS_2/MASTER')
-            cookie: QQ音乐Cookie
+            cookie: QQ音乐Cookie (可选，如果使用新API且已登录则自动使用凭证)
 
         Returns:
             处理完成的文件路径，失败则返回None
@@ -44,14 +44,25 @@ class MusicDownloader:
         try:
             # 1. 获取歌曲URL
             self.log("正在获取下载链接...")
-            song_url_result = await self.qq_music_api.get_song_url(song_info['mid'], filetype=filetype, cookie=cookie)
+
+            # 使用新的统一API获取下载链接
+            use_credential = self.qq_music_api.is_logged_in()
+            if use_credential:
+                self.log("使用登录凭证获取下载链接...")
+            else:
+                self.log("未登录状态，尝试获取免费下载链接...")
+
+            song_url_result = await self.qq_music_api.song_url(song_info['mid'], quality=filetype)
+
             if song_url_result['code'] == -1 or not song_url_result.get('url'):
                 error_msg = "无法获取歌曲下载链接，可能原因："
-                if not cookie:
-                    error_msg += "\n- 未提供QQ音乐Cookie（部分歌曲需要登录）"
+                if not use_credential and not cookie:
+                    error_msg += "\n- 未登录且未提供Cookie（建议通过菜单栏登录）"
                 if filetype in ["320", "flac", "ATMOS_51", "ATMOS_2", "MASTER"]:
                     error_msg += f"\n- 当前音质（{filetype}）可能需要VIP权限"
                 error_msg += "\n- 歌曲可能有版权限制"
+                if use_credential:
+                    error_msg += "\n- 当前账户可能没有该歌曲的下载权限"
                 self.log(error_msg)
                 return None
 
@@ -80,10 +91,14 @@ class MusicDownloader:
             # 4. 下载歌词
             self.log("正在获取歌词...")
             try:
-                lyrics = await self.qq_music_api.get_lyrics(song_info["mid"])
-                lrc_lyrics = parse_lrc_lyrics(lyrics)
-                if not lrc_lyrics:
-                    self.log("警告: 未找到歌词或歌词格式不正确")
+                lyrics_result = await self.qq_music_api.get_lyrics(song_info["mid"])
+                if lyrics_result['code'] == 0:
+                    lrc_lyrics = parse_lrc_lyrics(lyrics_result)
+                    if not lrc_lyrics:
+                        self.log("警告: 未找到歌词或歌词格式不正确")
+                else:
+                    self.log("警告: 获取歌词失败")
+                    lrc_lyrics = ""
             except Exception as e:
                 self.log(f"获取歌词时出错: {str(e)}")
                 lrc_lyrics = ""

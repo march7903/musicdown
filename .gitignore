@@ -15,3 +15,7 @@ lrc_output/
 *.pyw
 *.pyz
 *.session*
+config.json
+config.toml
+credential.json
+test*.py

@@ -1,3 +1,6 @@
+# QQ音乐API库
+qqmusic-api-python>=0.3.4
+
 # Telegram Bot API
 python-telegram-bot>=20.7
 
@@ -11,6 +14,11 @@ httpx>=0.24.0  # 异步HTTP客户端
 humanize>=4.0.0  # 文件大小格式化
 python-dotenv>=1.0.0  # 环境变量管理
 pydantic>=2.0.0  # 数据验证
+
+# 登录相关依赖
+qrcode>=7.0.0  # 二维码生成
+pillow>=9.0.0  # 图像处理
+pyzbar>=0.1.9  # 二维码解析
 
 tomli
 tomli_w

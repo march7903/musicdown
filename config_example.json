@@ -1,0 +1,12 @@
+// 用的时候重命名为config.json
+{
+  "qqmusic": {
+    "cookie": "xxxxxxxxxxx"
+  },
+  "tgbot": {
+    "botToken": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "apiBaseUrl": "https://xxxxxxxxxx/bot"
+  },
+  "download_path": "E:/music",
+  "quality": "flac"
+}

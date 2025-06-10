@@ -1,3 +1,4 @@
+from api.qqmusic import QQMusicAPI
 from telegram.ext import ContextTypes, CallbackQueryHandler
 from telegram import Update
 import os
@@ -13,7 +14,6 @@ project_root = current_dir.parent.parent
 sys.path.insert(0, str(project_root))
 
 
-from api.qm import QQMusicAPI
 from downloader.music_downloader import MusicDownloader
 from utils.config import config
 from utils.formatters import format_singers

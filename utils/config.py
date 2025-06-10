@@ -66,6 +66,9 @@ class Config:
     QQMUSIC_COOKIE: str = field(init=False)
     BOT_TOKEN: str = field(init=False)
     API_BASE_URL: str = field(init=False)
+    # 登录相关配置
+    AUTO_LOGIN: bool = field(init=False)
+    LOGIN_TYPE: str = field(init=False)  # "qr" 或 "phone"
     # 用户会话状态存储
     user_sessions = {}
 
@@ -79,9 +82,19 @@ class Config:
         self.BOT_TOKEN = self.config_file.get("tgbot.botToken", "")
         # 设置自定义API地址，如果没有则使用默认
         self.API_BASE_URL = self.config_file.get(
-            "tgbot.apiBaseUrl", "https://tgbot.790366.xyz/bot")
+            "tgbot.apiBaseUrl", "https://api.telegram.org/bot"
+        )
         # 设置默认音质
         self.DEFAULT_QUALITY = self.config_file.get("quality", "flac")
+        # 登录相关配置
+        self.AUTO_LOGIN = self.config_file.get("login.auto_login", False)
+        self.LOGIN_TYPE = self.config_file.get("login.type", "qr")
+
+    def set_login_config(self, auto_login: bool = False, login_type: str = "qr"):
+        """设置登录配置"""
+        self.config_file.set("login.auto_login", auto_login)
+        self.config_file.set("login.type", login_type)
+        self.reload_config()
 
 
 config = Config()

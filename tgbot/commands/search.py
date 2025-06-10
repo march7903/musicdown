@@ -1,3 +1,4 @@
+from api.qqmusic import QQMusicAPI
 from telegram.ext import ContextTypes, CommandHandler, filters
 from telegram import Update
 import sys
@@ -9,7 +10,6 @@ project_root = current_dir.parent.parent
 sys.path.insert(0, str(project_root))
 
 
-from api.qm import QQMusicAPI
 from tgbot.utils.message_builders import build_search_results_message
 from utils.config import config
 from utils.menum import SearchType
@@ -32,7 +32,7 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     try:
         # 调用API搜索歌曲
-        search_result = await qq_music_api.search(query, SearchType.SONG, page=1, limit=10)
+        search_result = await qq_music_api.search(query, limit=10, page=1)
 
         if search_result['code'] == -1 or not search_result.get('songs'):
             await status_message.edit_text("❌ 未找到相关歌曲，请尝试其他关键词。")

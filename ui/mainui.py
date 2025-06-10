@@ -10,11 +10,13 @@ from PyQt6.QtWidgets import (QComboBox, QFileDialog, QGridLayout,
                              QHBoxLayout, QHeaderView, QLabel, QLineEdit,
                              QMainWindow, QMessageBox, QProgressBar, QPushButton,
                              QRadioButton, QTabWidget, QTableWidget,
-                             QTableWidgetItem, QVBoxLayout, QWidget, QTextEdit)
+                             QTableWidgetItem, QVBoxLayout, QWidget, QTextEdit,
+                             QMenuBar, QMenu)
 
-from api.qm import QQMusicAPI
+from api.qqmusic import QQMusicAPI
 from downloader.music_downloader import MusicDownloader
 from utils.menum import SearchType
+from utils.config import config
 
 
 class WorkerThread(QThread):
@@ -35,40 +37,37 @@ class WorkerThread(QThread):
             if self.task_type == "search_song":
                 result = await self.api.search(
                     self.params["query"],
-                    SearchType.SONG,
-                    self.params.get("page", 1),
-                    self.params.get("limit", 20)
+                    self.params.get("limit", 20),
+                    self.params.get("page", 1)
                 )
                 self.update_signal.emit(
                     {"type": "search_result", "data": result})
 
             elif self.task_type == "search_album":
-                result = await self.api.search(
+                result = await self.api.search_album(
                     self.params["query"],
-                    SearchType.ALBUM,
-                    self.params.get("page", 1),
-                    self.params.get("limit", 20)
+                    self.params.get("limit", 20),
+                    self.params.get("page", 1)
                 )
                 self.update_signal.emit(
                     {"type": "search_result", "data": result})
 
             elif self.task_type == "get_album_songs":
-                result = await self.api.get_album_songs(self.params["album_mid"])
+                result = await self.api.album_detail(self.params["album_mid"])
                 self.update_signal.emit(
                     {"type": "album_songs", "data": result})
 
             elif self.task_type == "search_playlist":
-                result = await self.api.search(
+                result = await self.api.search_playlist(
                     self.params["query"],
-                    SearchType.SONGLIST,
-                    self.params.get("page", 1),
-                    self.params.get("limit", 20)
+                    self.params.get("limit", 20),
+                    self.params.get("page", 1)
                 )
                 self.update_signal.emit(
                     {"type": "search_result", "data": result})
 
             elif self.task_type == "get_playlist":
-                result = await self.api.get_playlist(self.params["disstid"])
+                result = await self.api.playlist_detail(self.params["disstid"])
                 self.update_signal.emit(
                     {"type": "playlist_songs", "data": result})
 
@@ -115,11 +114,10 @@ class WorkerThread(QThread):
                 self.update_signal.emit({"type": "download_all_complete"})
 
             elif self.task_type == "get_playlist_from_link":
-                url = self.params["url"]
-                result = await self.api.get_playlist_songs(url)
+                # 暂时不支持从链接获取歌单功能
                 self.update_signal.emit({
                     "type": "playlist_link_result",
-                    "data": result
+                    "data": {"code": -1, "error": "暂不支持从链接获取歌单功能"}
                 })
 
             elif self.task_type == "search_and_download":
@@ -127,9 +125,8 @@ class WorkerThread(QThread):
                 query = f"{self.params['song_name']} {self.params['singer_name']}"
                 search_result = await self.api.search(
                     query,
-                    SearchType.SONG,
-                    1,  # 页码
-                    1    # 限制为1个结果
+                    1,    # 限制为1个结果
+                    1     # 页码
                 )
 
                 if not search_result or not search_result.get("songs") or len(search_result["songs"]) == 0:
@@ -176,9 +173,8 @@ class WorkerThread(QThread):
                     query = f"{song['name']} {song['artist']}"
                     search_result = await self.api.search(
                         query,
-                        SearchType.SONG,
-                        1,  # 页码
-                        1    # 限制为1个结果
+                        1,    # 限制为1个结果
+                        1     # 页码
                     )
 
                     success = False
@@ -225,9 +221,8 @@ class WorkerThread(QThread):
                     # 搜索歌曲
                     search_result = await self.api.search(
                         query,
-                        SearchType.SONG,
-                        1,  # 页码
-                        1    # 限制为1个结果
+                        1,    # 限制为1个结果
+                        1     # 页码
                     )
 
                     # 获取第一个匹配结果
@@ -260,9 +255,8 @@ class WorkerThread(QThread):
                     # 搜索歌曲
                     search_result = await self.api.search(
                         query,
-                        SearchType.SONG,
-                        1,  # 页码
-                        1    # 限制为1个结果
+                        1,    # 限制为1个结果
+                        1     # 页码
                     )
 
                     # 获取第一个匹配结果
@@ -363,6 +357,9 @@ class QQMusicDownloaderGUI(QMainWindow):
         self.setWindowTitle("QQ音乐下载器")
         self.setWindowIcon(QIcon("ui/icon.ico"))
         self.setGeometry(100, 100, 700, 400)
+
+        # 创建菜单栏
+        self.create_menu_bar()
 
         # 主布局
         main_widget = QWidget()
@@ -799,16 +796,29 @@ class QQMusicDownloaderGUI(QMainWindow):
 
             self.result_table.setRowCount(len(self.search_results))
             for i, album in enumerate(self.search_results):
-                self.result_table.setItem(
-                    i, 0, QTableWidgetItem(album["albumName"]))
-                self.result_table.setItem(
-                    i, 1, QTableWidgetItem(album["singerName"]))
-                self.result_table.setItem(
-                    i, 2, QTableWidgetItem(album.get("publicTime", "")))
+                # 兼容新旧API的字段名
+                album_name = album.get("albumName") or album.get(
+                    "name") or album.get("album_name") or "未知专辑"
+                singer_name = album.get("singerName") or album.get(
+                    "singer_name") or "未知歌手"
+                if isinstance(album.get("singer"), list) and album["singer"]:
+                    singer_name = ", ".join([s.get("name", s) if isinstance(
+                        s, dict) else str(s) for s in album["singer"]])
+                elif isinstance(album.get("singer"), dict):
+                    singer_name = album["singer"].get("name", "未知歌手")
+
+                public_time = album.get("publicTime") or album.get(
+                    "public_time") or album.get("time") or ""
+                album_mid = album.get("albumMID") or album.get(
+                    "album_mid") or album.get("mid") or ""
+
+                self.result_table.setItem(i, 0, QTableWidgetItem(album_name))
+                self.result_table.setItem(i, 1, QTableWidgetItem(singer_name))
+                self.result_table.setItem(i, 2, QTableWidgetItem(public_time))
 
                 view_btn = QPushButton("查看歌曲")
                 view_btn.clicked.connect(
-                    lambda checked, album_mid=album["albumMID"]: self.get_album_songs(album_mid))
+                    lambda checked, album_mid=album_mid: self.get_album_songs(album_mid))
                 self.result_table.setCellWidget(i, 3, view_btn)
 
         elif self.search_type_combo.currentIndex() == 2:  # 歌单
@@ -819,16 +829,37 @@ class QQMusicDownloaderGUI(QMainWindow):
 
             self.result_table.setRowCount(len(self.search_results))
             for i, playlist in enumerate(self.search_results):
+                # 兼容新旧API的字段名
+                playlist_name = playlist.get("dissname") or playlist.get(
+                    "name") or playlist.get("title") or "未知歌单"
+
+                # 处理创建者信息
+                creator_name = "未知创建者"
+                if playlist.get("creator"):
+                    if isinstance(playlist["creator"], dict):
+                        creator_name = playlist["creator"].get("name", "未知创建者")
+                    else:
+                        creator_name = str(playlist["creator"])
+                elif playlist.get("creator_name"):
+                    creator_name = playlist["creator_name"]
+
+                # 处理歌曲数量
+                song_count = playlist.get("song_count") or playlist.get(
+                    "songnum") or playlist.get("total") or 0
+
+                # 处理歌单ID
+                playlist_id = playlist.get("dissid") or playlist.get(
+                    "id") or playlist.get("disstid") or 0
+
                 self.result_table.setItem(
-                    i, 0, QTableWidgetItem(playlist["dissname"]))
+                    i, 0, QTableWidgetItem(playlist_name))
+                self.result_table.setItem(i, 1, QTableWidgetItem(creator_name))
                 self.result_table.setItem(
-                    i, 1, QTableWidgetItem(playlist["creator"]["name"]))
-                self.result_table.setItem(
-                    i, 2, QTableWidgetItem(str(playlist["song_count"])))
+                    i, 2, QTableWidgetItem(str(song_count)))
 
                 view_btn = QPushButton("查看歌曲")
                 view_btn.clicked.connect(
-                    lambda checked, disstid=int(playlist["dissid"]): self.get_playlist(disstid))
+                    lambda checked, disstid=int(playlist_id): self.get_playlist(disstid))
                 self.result_table.setCellWidget(i, 3, view_btn)
 
     def get_album_songs(self, album_mid):
@@ -1202,9 +1233,8 @@ class QQMusicDownloaderGUI(QMainWindow):
         query = f"{song_name} {singer_name}"
         result = await self.api.search(
             query,
-            SearchType.SONG,
-            1,  # 页码
-            1    # 限制为1个结果
+            1,    # 限制为1个结果
+            1     # 页码
         )
         if result and result.get("songs") and len(result["songs"]) > 0:
             return result["songs"][0]
@@ -1473,3 +1503,169 @@ class QQMusicDownloaderGUI(QMainWindow):
 
         # 刷新表格视图
         self.playlist_link_table.update()
+
+    def create_menu_bar(self):
+        """创建菜单栏"""
+        menubar = self.menuBar()
+
+        # 账户菜单
+        account_menu = menubar.addMenu('账户')
+
+        # 登录动作
+        login_action = account_menu.addAction('登录')
+        login_action.triggered.connect(self.show_login_dialog)
+
+        # 登出动作
+        logout_action = account_menu.addAction('登出')
+        logout_action.triggered.connect(self.logout)
+
+        # 用户信息动作
+        user_info_action = account_menu.addAction('用户信息')
+        user_info_action.triggered.connect(self.show_user_info)
+
+        account_menu.addSeparator()
+
+        # API设置动作
+        api_settings_action = account_menu.addAction('API设置')
+        api_settings_action.triggered.connect(self.show_api_settings)
+
+        # 帮助菜单
+        help_menu = menubar.addMenu('帮助')
+
+        about_action = help_menu.addAction('关于')
+        about_action.triggered.connect(self.show_about)
+
+        # 更新菜单状态
+        self.update_menu_status()
+
+    def update_menu_status(self):
+        """更新菜单状态"""
+        # 检查是否支持登录功能
+        has_login_support = hasattr(self.api, 'is_logged_in')
+
+        # 这里可以根据登录状态更新菜单项的可用性
+        if has_login_support:
+            try:
+                is_logged_in = self.api.is_logged_in()
+                # 可以根据登录状态启用/禁用相关菜单项
+                print(f"登录状态: {'已登录' if is_logged_in else '未登录'}")
+            except Exception as e:
+                print(f"检查登录状态时出错: {e}")
+                is_logged_in = False
+
+    def show_login_dialog(self):
+        """显示登录对话框"""
+        try:
+            from ui.login_dialog import LoginDialog
+
+            # 检查是否支持登录功能
+            if not hasattr(self.api, 'login_with_qr'):
+                QMessageBox.information(
+                    self, "提示",
+                    "当前API不支持登录功能。\n请在API设置中启用新版API。"
+                )
+                return
+
+            dialog = LoginDialog(self.api, self)
+            if dialog.exec() == dialog.DialogCode.Accepted:
+                user_info = dialog.get_user_info()
+                if user_info.get('logged_in'):
+                    QMessageBox.information(
+                        self, "登录成功",
+                        f"欢迎! 用户ID: {user_info.get('musicid', 'Unknown')}"
+                    )
+                    self.update_menu_status()
+
+        except ImportError as e:
+            QMessageBox.warning(
+                self, "错误",
+                f"无法加载登录对话框: {str(e)}\n请确保已安装相关依赖。"
+            )
+        except Exception as e:
+            QMessageBox.critical(
+                self, "错误",
+                f"登录过程中发生错误: {str(e)}"
+            )
+
+    def logout(self):
+        """登出"""
+        try:
+            if hasattr(self.api, 'logout'):
+                self.api.logout()
+                QMessageBox.information(self, "提示", "已成功登出")
+                self.update_menu_status()
+            else:
+                QMessageBox.information(self, "提示", "当前API不支持登出功能")
+        except Exception as e:
+            QMessageBox.critical(self, "错误", f"登出失败: {str(e)}")
+
+    def show_user_info(self):
+        """显示用户信息"""
+        try:
+            if hasattr(self.api, 'get_user_info'):
+                user_info = self.api.get_user_info()
+                if user_info.get('logged_in'):
+                    info_text = f"""
+用户信息:
+- 用户ID: {user_info.get('musicid', 'Un known')}
+- UIN: {user_info.get('uin', 'Unknown')}
+- 登录状态: 已登录
+                    """.strip()
+                else:
+                    info_text = "当前未登录"
+
+                QMessageBox.information(self, "用户信息", info_text)
+            else:
+                QMessageBox.information(self, "提示", "当前API不支持用户信息查询")
+        except Exception as e:
+            QMessageBox.critical(self, "错误", f"获取用户信息失败: {str(e)}")
+
+    def show_api_settings(self):
+        """显示API设置对话框"""
+        from PyQt6.QtWidgets import QDialog, QVBoxLayout, QCheckBox, QDialogButtonBox
+
+        dialog = QDialog(self)
+        dialog.setWindowTitle("API设置")
+        dialog.setFixedSize(300, 150)
+
+        layout = QVBoxLayout()
+
+        # 自动登录选项
+        auto_login_cb = QCheckBox("启动时自动登录")
+        auto_login_cb.setChecked(config.AUTO_LOGIN)
+        layout.addWidget(auto_login_cb)
+
+        # 按钮
+        buttons = QDialogButtonBox(
+            QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
+        )
+        buttons.accepted.connect(dialog.accept)
+        buttons.rejected.connect(dialog.reject)
+        layout.addWidget(buttons)
+
+        dialog.setLayout(layout)
+
+        if dialog.exec() == QDialog.DialogCode.Accepted:
+            # 保存设置
+            config.set_login_config(
+                auto_login=auto_login_cb.isChecked()
+            )
+
+            QMessageBox.information(self, "提示", "设置已保存，重启程序后生效")
+
+    def show_about(self):
+        """显示关于对话框"""
+        about_text = """
+QQ音乐下载器 v2.0
+
+基于QQMusicApi库重构，支持：
+- 歌曲搜索和下载
+- 专辑和歌单下载
+- 多种音质选择
+- 用户登录功能
+- 批量下载
+
+开发者: alien
+        """.strip()
+
+        QMessageBox.about(self, "关于", about_text)

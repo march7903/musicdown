@@ -1,3 +1,4 @@
+from api.qqmusic import QQMusicAPI
 from telegram.ext import ContextTypes, CallbackQueryHandler
 from telegram import Update
 import sys
@@ -9,7 +10,6 @@ project_root = current_dir.parent.parent
 sys.path.insert(0, str(project_root))
 
 
-from api.qm import QQMusicAPI
 from tgbot.utils.message_builders import build_search_results_message
 from utils.config import config
 from utils.menum import SearchType
@@ -36,7 +36,7 @@ async def handle_pagination(update: Update, context: ContextTypes.DEFAULT_TYPE):
         next_page = current_page + 1
         try:
             # 获取下一页搜索结果
-            search_result = await qq_music_api.search(query, SearchType.SONG, page=next_page, limit=10)
+            search_result = await qq_music_api.search(query, limit=10, page=next_page)
 
             if search_result['code'] == -1 or not search_result.get('songs'):
                 await callback_query.answer("没有更多结果了")
@@ -62,7 +62,7 @@ async def handle_pagination(update: Update, context: ContextTypes.DEFAULT_TYPE):
         prev_page = current_page - 1
         try:
             # 获取上一页搜索结果
-            search_result = await qq_music_api.search(query, SearchType.SONG, page=prev_page, limit=10)
+            search_result = await qq_music_api.search(query, limit=10, page=prev_page)
 
             # 更新用户会话
             config.user_sessions[user_id]["search_results"] = search_result['songs']

@@ -11,6 +11,27 @@ def format_singers(singers: List[Dict]) -> str:
     return " ".join([singer['name'] for singer in singers])
 
 
+def clean_html_tags(text: str) -> str:
+    """清理文本中的HTML标签
+
+    Args:
+        text: 包含HTML标签的文本
+
+    Returns:
+        清理后的纯文本
+    """
+    if not text:
+        return text
+
+    # 移除HTML标签，保留标签内的文本内容
+    clean_text = re.sub(r'<[^>]+>', '', text)
+
+    # 清理多余的空白字符
+    clean_text = re.sub(r'\s+', ' ', clean_text).strip()
+
+    return clean_text
+
+
 def format_interval(interval: int) -> str:
     minutes = interval // 60  # 计算分钟
     seconds = interval % 60  # 计算剩余秒数

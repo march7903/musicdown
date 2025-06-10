@@ -15,6 +15,7 @@ from PyQt6.QtWidgets import (QComboBox, QFileDialog, QGridLayout,
 
 from api.qqmusic import QQMusicAPI
 from downloader.music_downloader import MusicDownloader
+from utils.formatters import clean_html_tags
 
 
 class WorkerThread(QThread):
@@ -806,8 +807,8 @@ class QQMusicDownloaderGUI(QMainWindow):
         self.result_table.setItem(row, 0, checkbox)
 
         # 歌曲信息
-        self.result_table.setItem(
-            row, 1, QTableWidgetItem(song.get("name", "未知歌曲")))
+        song_name = clean_html_tags(song.get("name", "未知歌曲"))
+        self.result_table.setItem(row, 1, QTableWidgetItem(song_name))
 
         # 歌手信息
         singer_names = self._get_singer_names(song.get("singer", []))
@@ -816,7 +817,7 @@ class QQMusicDownloaderGUI(QMainWindow):
         # 专辑信息
         album_name = "未知专辑"
         if song.get("album"):
-            album_name = song["album"].get("name", "未知专辑")
+            album_name = clean_html_tags(song["album"].get("name", "未知专辑"))
         self.result_table.setItem(row, 3, QTableWidgetItem(album_name))
 
         # 时长
@@ -872,10 +873,12 @@ class QQMusicDownloaderGUI(QMainWindow):
     def _get_singer_names(self, singers):
         """获取歌手名称字符串"""
         if isinstance(singers, list):
-            return ", ".join([s.get("name", str(s)) if isinstance(s, dict) else str(s) for s in singers])
+            names = [clean_html_tags(s.get("name", str(s))) if isinstance(
+                s, dict) else clean_html_tags(str(s)) for s in singers]
+            return ", ".join(names)
         elif isinstance(singers, dict):
-            return singers.get("name", "未知歌手")
-        return str(singers) if singers else "未知歌手"
+            return clean_html_tags(singers.get("name", "未知歌手"))
+        return clean_html_tags(str(singers)) if singers else "未知歌手"
 
     def _get_available_formats(self, song):
         """获取歌曲可用的音频格式"""
@@ -968,26 +971,32 @@ class QQMusicDownloaderGUI(QMainWindow):
 
     def _get_album_name(self, album):
         """获取专辑名称"""
-        return (album.get("name") or album.get("albumName") or
+        name = (album.get("name") or album.get("albumName") or
                 album.get("album_name") or "未知专辑")
+        return clean_html_tags(name)
 
     def _get_album_singer_name(self, album):
         """获取专辑歌手名称"""
         # 优先从singer_list获取
         if album.get("singer_list"):
-            return ", ".join([s.get("name", str(s)) for s in album["singer_list"]])
+            names = [clean_html_tags(s.get("name", str(s)))
+                     for s in album["singer_list"]]
+            return ", ".join(names)
 
         # 其次从singer字段获取
         singer = album.get("singer")
         if isinstance(singer, list):
-            return ", ".join([s.get("name", str(s)) if isinstance(s, dict) else str(s) for s in singer])
+            names = [clean_html_tags(s.get("name", str(s))) if isinstance(
+                s, dict) else clean_html_tags(str(s)) for s in singer]
+            return ", ".join(names)
         elif isinstance(singer, dict):
-            return singer.get("name", "未知歌手")
+            return clean_html_tags(singer.get("name", "未知歌手"))
         elif isinstance(singer, str):
-            return singer
+            return clean_html_tags(singer)
 
         # 最后尝试其他字段
-        return album.get("singerName") or album.get("singer_name") or "未知歌手"
+        name = album.get("singerName") or album.get("singer_name") or "未知歌手"
+        return clean_html_tags(name)
 
     def _get_album_publish_time(self, album):
         """获取专辑发行时间"""
@@ -1001,23 +1010,25 @@ class QQMusicDownloaderGUI(QMainWindow):
 
     def _get_playlist_name(self, playlist):
         """获取歌单名称"""
-        return (playlist.get("dissname") or playlist.get("name") or
+        name = (playlist.get("dissname") or playlist.get("name") or
                 playlist.get("title") or "未知歌单")
+        return clean_html_tags(name)
 
     def _get_playlist_creator_name(self, playlist):
         """获取歌单创建者名称"""
         # 根据JSON数据结构，创建者信息在nickname字段中
         creator_name = playlist.get("nickname")
         if creator_name:
-            return creator_name
+            return clean_html_tags(creator_name)
 
         # 备用字段
         creator = playlist.get("creator")
         if isinstance(creator, dict):
-            return creator.get("name", "未知创建者")
+            return clean_html_tags(creator.get("name", "未知创建者"))
         elif creator:
-            return str(creator)
-        return playlist.get("creator_name") or "未知创建者"
+            return clean_html_tags(str(creator))
+        name = playlist.get("creator_name") or "未知创建者"
+        return clean_html_tags(name)
 
     def _get_playlist_song_count(self, playlist):
         """获取歌单歌曲数量"""
@@ -1076,7 +1087,7 @@ class QQMusicDownloaderGUI(QMainWindow):
         """获取当前专辑名称"""
         # 尝试从album_data中获取
         if album_data.get("album_name"):
-            return album_data["album_name"]
+            return clean_html_tags(album_data["album_name"])
 
         # 从搜索结果中查找匹配的专辑
         album_mid = album_data.get("albumMid") or album_data.get("album_mid")
@@ -1142,8 +1153,8 @@ class QQMusicDownloaderGUI(QMainWindow):
         self.result_table.setItem(row, 0, checkbox)
 
         # 歌曲信息
-        self.result_table.setItem(
-            row, 1, QTableWidgetItem(song.get("name", "未知歌曲")))
+        song_name = clean_html_tags(song.get("name", "未知歌曲"))
+        self.result_table.setItem(row, 1, QTableWidgetItem(song_name))
 
         # 歌手信息
         singer_names = self._get_singer_names(song.get("singer", []))
@@ -1494,7 +1505,7 @@ class QQMusicDownloaderGUI(QMainWindow):
             return
 
         # 更新歌单信息标签
-        playlist_name = playlist_data["data"]["name"]
+        playlist_name = clean_html_tags(playlist_data["data"]["name"])
         songs_count = playlist_data["data"]["songs_count"]
         self.playlist_info_label.setText(
             f"歌单信息: {playlist_name} (共{songs_count}首歌曲)")

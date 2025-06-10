@@ -395,13 +395,7 @@ class QQMusicDownloaderGUI(QMainWindow):
 
         # 搜索结果表格
         self.result_table = QTableWidget()
-        self.result_table.setColumnCount(7)
-        self.result_table.setHorizontalHeaderLabels(
-            ["", "歌曲名", "歌手", "专辑", "时长", "可用格式", "操作"])
-        self.result_table.horizontalHeader().setSectionResizeMode(
-            QHeaderView.ResizeMode.ResizeToContents)
-        self.result_table.horizontalHeader().setSectionResizeMode(
-            1, QHeaderView.ResizeMode.Stretch)
+        self._setup_song_table()
         self.result_table.setEditTriggers(
             QTableWidget.EditTrigger.NoEditTriggers)
         self.result_table.setSelectionBehavior(
@@ -774,6 +768,9 @@ class QQMusicDownloaderGUI(QMainWindow):
         self.result_table.setColumnCount(4)
         self.result_table.setHorizontalHeaderLabels(
             ["专辑名", "歌手", "发行时间", "操作"])
+        header = self.result_table.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
 
         self.result_table.setRowCount(len(albums))
         for i, album in enumerate(albums):
@@ -790,6 +787,9 @@ class QQMusicDownloaderGUI(QMainWindow):
         self.result_table.setColumnCount(4)
         self.result_table.setHorizontalHeaderLabels(
             ["歌单名", "创建者", "歌曲数量", "操作"])
+        header = self.result_table.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
 
         self.result_table.setRowCount(len(playlists))
         for i, playlist in enumerate(playlists):
@@ -804,6 +804,9 @@ class QQMusicDownloaderGUI(QMainWindow):
         self.result_table.setColumnCount(7)
         self.result_table.setHorizontalHeaderLabels(
             ["", "歌曲名", "歌手", "专辑", "时长", "可用格式", "操作"])
+        header = self.result_table.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
 
     def _fill_song_row(self, row, song, song_list):
         """填充歌曲行数据"""

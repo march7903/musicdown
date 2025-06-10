@@ -84,9 +84,9 @@ class LoginWorker(QThread):
             if event_type == "qr_generated":
                 # data 现在是二维码的字节数据
                 self.qr_generated.emit(data)
-            elif event_type == "scanned":
+            elif event_type == "waiting_scan":
                 self.status_update.emit(str(data))
-            elif event_type == "waiting":
+            elif event_type == "waiting_confirm":
                 self.status_update.emit(str(data))
             elif event_type == "login_success":
                 user_info = self.adapter.get_user_info()

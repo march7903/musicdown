@@ -4,6 +4,7 @@ from typing import Dict, List
 from urllib.parse import urlparse
 
 from utils.config import config
+from utils.logger import logger
 
 
 def format_singers(singers: List[Dict]) -> str:
@@ -155,7 +156,7 @@ def _parse_wbw_lyrics(lyric_str: str, lyric_type: str) -> list[tuple[int, str, s
         # 从XML中提取LyricContent
         match = re.search(r'LyricContent="([^"]+)"', lyric_str)
         if not match:
-            print(f"无法从XML中提取歌词内容: {lyric_str}")
+            logger.warning(f"无法从XML中提取歌词内容: {lyric_str}")
             return
 
         lyric_content = match.group(1).replace(

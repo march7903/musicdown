@@ -3,6 +3,8 @@ import re
 
 import json
 
+from utils.logger import logger
+
 
 def ms_to_timestamp(ms):
     """将毫秒转换为LRC格式的时间戳 [mm:ss.sss]"""
@@ -40,7 +42,7 @@ def parse_json_to_lrc(json_file, output_dir="lrc_output"):
         # 从XML中提取LyricContent
         match = re.search(r'LyricContent="([^"]+)"', lyric_xml)
         if not match:
-            print(f"无法从XML中提取歌词内容: {json_file}")
+            logger.warning(f"无法从XML中提取歌词内容: {json_file}")
             return
 
         lyric_content = match.group(1).replace(
@@ -249,17 +251,17 @@ def parse_json_to_lrc(json_file, output_dir="lrc_output"):
                         continue
                 f.write(line_text + "\n")
 
-        print(f"成功转换: {output_file}")
+        logger.info(f"成功转换: {output_file}")
 
     except Exception as e:
-        print(f"处理文件时出错: {e}")
+        logger.error(f"处理文件时出错: {e}")
         import traceback
         traceback.print_exc()
 
 
 def main():
     json_files = "json\lyrics_parser_word_by_word_older.json"
-    print(f"处理文件: {json_files}")
+    logger.info(f"处理文件: {json_files}")
 
 
     parse_json_to_lrc(json_files)

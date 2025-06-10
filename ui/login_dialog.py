@@ -14,6 +14,7 @@ from PyQt6.QtCore import QThread, pyqtSignal, Qt
 from PyQt6.QtGui import QPixmap, QFont
 
 from api.qqmusic import QQMusicAPI
+from utils.logger import logger
 
 
 class LoginWorker(QThread):
@@ -96,7 +97,7 @@ class LoginWorker(QThread):
             elif event_type == "error":
                 self.login_failed.emit(str(data))
         except Exception as e:
-            print(f"回调处理错误: {e}")
+            logger.error(f"回调处理错误: {e}")
             self.login_failed.emit(f"回调处理错误: {str(e)}")
 
     def _phone_login(self):
@@ -244,16 +245,16 @@ class QRLoginWidget(QWidget):
                                                   Qt.TransformationMode.SmoothTransformation)
                     self.qr_label.setPixmap(scaled_pixmap)
                     self.status_label.setText("请使用手机扫描二维码")
-                    print("二维码已从内存加载并显示")
+                    logger.debug("二维码已从内存加载并显示")
                 else:
                     self.status_label.setText("二维码加载失败")
-                    print("无法从字节数据加载二维码图片")
+                    logger.warning("无法从字节数据加载二维码图片")
             else:
                 self.status_label.setText("二维码数据为空")
-                print("二维码数据为空")
+                logger.warning("二维码数据为空")
         except Exception as e:
             self.status_label.setText(f"显示二维码时出错: {str(e)}")
-            print(f"显示二维码时出错: {e}")
+            logger.error(f"显示二维码时出错: {e}")
 
     def show_qr(self, qr_path: str):
         """显示二维码（兼容旧版本，从文件路径加载）"""
@@ -266,16 +267,16 @@ class QRLoginWidget(QWidget):
                                                   Qt.TransformationMode.SmoothTransformation)
                     self.qr_label.setPixmap(scaled_pixmap)
                     self.status_label.setText("请使用手机扫描二维码")
-                    print(f"二维码已显示: {qr_path}")
+                    logger.debug(f"二维码已显示: {qr_path}")
                 else:
                     self.status_label.setText("二维码加载失败")
-                    print(f"无法加载二维码图片: {qr_path}")
+                    logger.warning(f"无法加载二维码图片: {qr_path}")
             else:
                 self.status_label.setText("二维码文件不存在")
-                print(f"二维码文件不存在: {qr_path}")
+                logger.warning(f"二维码文件不存在: {qr_path}")
         except Exception as e:
             self.status_label.setText(f"显示二维码时出错: {str(e)}")
-            print(f"显示二维码时出错: {e}")
+            logger.error(f"显示二维码时出错: {e}")
 
     def on_login_success(self, user_info: dict):
         """登录成功"""
@@ -362,8 +363,8 @@ if __name__ == "__main__":
     dialog = LoginDialog(adapter)
 
     if dialog.exec() == QDialog.DialogCode.Accepted:
-        print("登录成功:", dialog.get_user_info())
+        logger.info("登录成功: %s", dialog.get_user_info())
     else:
-        print("登录取消")
+        logger.info("登录取消")
 
     sys.exit()

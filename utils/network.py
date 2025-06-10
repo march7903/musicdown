@@ -3,6 +3,8 @@ from typing import Optional, Dict, Any
 import httpx
 import urllib3
 
+from utils.logger import logger
+
 
 class NetworkManager:
     """网络请求管理类"""
@@ -37,7 +39,7 @@ class NetworkManager:
         try:
             return self.client.get(url, **kwargs)
         except Exception as e:
-            print(f"请求失败: {str(e)}")
+            logger.error(f"请求失败: {e}")
             return None
 
     async def async_get(self, url: str, params: Optional[Dict] = None,
@@ -50,7 +52,7 @@ class NetworkManager:
                 return None
             return response.json()
         except Exception as e:
-            print(f"异步请求失败: {str(e)}")
+            logger.error(f"异步请求失败: {e}")
             return None
 
     async def async_get_text(self, url: str, params: Optional[Dict] = None,
@@ -63,7 +65,7 @@ class NetworkManager:
                 return None
             return response.text
         except Exception as e:
-            print(f"异步请求失败: {str(e)}")
+            logger.error(f"异步请求失败: {e}")
             return None
 
     async def async_post(self, url: str, data: Optional[Dict] = None,
@@ -76,7 +78,7 @@ class NetworkManager:
                 return None
             return response.json()
         except Exception as e:
-            print(f"异步请求失败: {str(e)}")
+            logger.error(f"异步请求失败: {e}")
             return None
 
     async def async_get_bytes(self, url: str, headers: Optional[Dict] = None) -> Optional[bytes]:
@@ -88,7 +90,7 @@ class NetworkManager:
                 return None
             return response.read()
         except Exception as e:
-            print(f"异步请求失败: {str(e)}")
+            logger.error(f"异步请求失败: {e}")
             return None
 
     def close_sync(self):

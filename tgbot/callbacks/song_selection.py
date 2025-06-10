@@ -17,6 +17,7 @@ sys.path.insert(0, str(project_root))
 from downloader.music_downloader import MusicDownloader
 from utils.config import config
 from utils.formatters import format_singers
+from utils.logger import logger
 
 # 初始化QQ音乐API和下载管理器
 qq_music_api = QQMusicAPI()
@@ -59,7 +60,7 @@ async def handle_song_selection(update: Update, context: ContextTypes.DEFAULT_TY
             filetype = config.DEFAULT_QUALITY
             cookie = config.QQMUSIC_COOKIE
         except Exception as e:
-            print(f"重新加载配置失败: {str(e)}")
+            logger.warning(f"重新加载配置失败: {e}")
             # 如果重新加载失败，使用当前内存中的配置
             filetype = config.DEFAULT_QUALITY
             cookie = config.QQMUSIC_COOKIE
@@ -105,7 +106,7 @@ async def handle_song_selection(update: Update, context: ContextTypes.DEFAULT_TY
         try:
             cover_path = await music_downloader.download_manager.download_album_cover(album_mid, temp_dir)
         except Exception as cover_error:
-            print(f"封面下载失败: {str(cover_error)}")
+            logger.warning(f"封面下载失败: {cover_error}")
             pass  # 如果封面下载失败，继续而不使用封面
 
         # 准备发送的音频信息
@@ -157,12 +158,12 @@ async def handle_song_selection(update: Update, context: ContextTypes.DEFAULT_TY
             import shutil
             shutil.rmtree(temp_dir, ignore_errors=True)
         except Exception as e:
-            print(f"清理临时目录失败: {str(e)}")
+            logger.warning(f"清理临时目录失败: {e}")
 
     except Exception as e:
         # 获取详细的错误信息
         error_details = traceback.format_exc()
-        print(f"处理歌曲时出错: {error_details}")
+        logger.error(f"处理歌曲时出错: {error_details}")
 
         # 向用户显示友好的错误信息，包含错误原因
         error_msg = f"❌ 处理歌曲时出错: {str(e)}\n请稍后重试或联系管理员。"

@@ -17,7 +17,7 @@ try:
     QQMUSIC_API_AVAILABLE = True
 except ImportError:
     QQMUSIC_API_AVAILABLE = False
-    print("警告: qqmusic-api-python 未安装")
+    logger.warning("警告: qqmusic-api-python 未安装")
 
 from utils.logger import logger
 
@@ -117,8 +117,7 @@ class QQMusicAPI:
                 page=page,
                 num=limit
             )
-            with open("json/search_song_result.json", "w", encoding="utf-8") as f:
-                json.dump(result, f, indent=4, ensure_ascii=False)
+            logger.debug("search_song result: %s", result)
             return {
                 "code": 0,
                 "songs": result if isinstance(result, list) else [],
@@ -168,9 +167,9 @@ class QQMusicAPI:
             }
 
             file_type = quality_map.get(quality, song.SongFileType.MP3_128)
-            result = await song.get_song_urls([song_mid], file_type, credential=self.credential)
-            with open("json/song_url_result.json", "w", encoding="utf-8") as f:
-                json.dump(result, f, indent=4, ensure_ascii=False)
+            result = await song.get_song_urls(
+                [song_mid], file_type, credential=self.credential)
+            logger.debug("song_url result: %s", result)
 
             if isinstance(result, dict) and song_mid in result:
                 url = result[song_mid]
@@ -203,8 +202,7 @@ class QQMusicAPI:
                 page=page,
                 num=limit
             )
-            with open("json/search_album_result.json", "w", encoding="utf-8") as f:
-                json.dump(result, f, indent=4, ensure_ascii=False)
+            logger.debug("search_album result: %s", result)
             return {
                 "code": 0,
                 "albums": result if isinstance(result, list) else [],
@@ -225,8 +223,7 @@ class QQMusicAPI:
         """
         try:
             result = await album.get_song(album_mid, num=100, page=1)
-            with open("json/album_detail_result.json", "w", encoding="utf-8") as f:
-                json.dump(result, f, indent=4, ensure_ascii=False)
+            logger.debug("album_detail result: %s", result)
             return {
                 "code": 0,
                 "songs": result if isinstance(result, list) else [],
@@ -256,8 +253,7 @@ class QQMusicAPI:
                 page=page,
                 num=limit
             )
-            with open("json/search_playlist_result.json", "w", encoding="utf-8") as f:
-                json.dump(result, f, indent=4, ensure_ascii=False)
+            logger.debug("search_playlist result: %s", result)
             return {
                 "code": 0,
                 "playlists": result if isinstance(result, list) else [],
@@ -307,8 +303,7 @@ class QQMusicAPI:
         """
         try:
             result = await lyric.get_lyric(song_mid, trans=True, roma=True)
-            with open("json/lyric_result.json", "w", encoding="utf-8") as f:
-                json.dump(result, f, indent=4, ensure_ascii=False)
+            logger.debug("lyric result: %s", result)
             if isinstance(result, dict):
                 return {
                     "code": 0,

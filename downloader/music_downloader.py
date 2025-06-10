@@ -51,6 +51,7 @@ class MusicDownloader:
                 self.log("使用登录凭证获取下载链接...")
             else:
                 self.log("未登录状态，尝试获取免费下载链接...")
+                self.log("登录凭据无效或已过期，如遇下载受限请重新登录。", level="WARNING")
 
             song_url_result = await self.qq_music_api.song_url(song_info['mid'], quality=filetype)
 

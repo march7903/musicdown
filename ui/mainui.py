@@ -387,9 +387,9 @@ class QQMusicDownloaderGUI(QMainWindow):
 
         # 搜索结果表格
         self.result_table = QTableWidget()
-        self.result_table.setColumnCount(6)
+        self.result_table.setColumnCount(7)
         self.result_table.setHorizontalHeaderLabels(
-            ["", "歌曲名", "歌手", "专辑", "时长", "操作"])
+            ["", "歌曲名", "歌手", "专辑", "时长", "可用格式", "操作"])
         self.result_table.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.ResizeToContents)
         self.result_table.horizontalHeader().setSectionResizeMode(
@@ -541,9 +541,9 @@ class QQMusicDownloaderGUI(QMainWindow):
 
         # 歌单歌曲列表
         self.playlist_link_table = QTableWidget()
-        self.playlist_link_table.setColumnCount(6)
+        self.playlist_link_table.setColumnCount(7)
         self.playlist_link_table.setHorizontalHeaderLabels(
-            ["", "歌曲名", "歌手", "专辑", "时长", "操作"])
+            ["", "歌曲名", "歌手", "专辑", "时长", "可用格式", "操作"])
         self.playlist_link_table.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.ResizeToContents)
         self.playlist_link_table.horizontalHeader().setSectionResizeMode(
@@ -792,9 +792,9 @@ class QQMusicDownloaderGUI(QMainWindow):
         self.result_table.clearContents()
         self.result_table.setRowCount(0)
 
-        self.result_table.setColumnCount(6)
+        self.result_table.setColumnCount(7)
         self.result_table.setHorizontalHeaderLabels(
-            ["", "歌曲名", "歌手", "专辑", "时长", "操作"])
+            ["", "歌曲名", "歌手", "专辑", "时长", "可用格式", "操作"])
 
     def _fill_song_row(self, row, song, song_list):
         """填充歌曲行数据"""
@@ -825,11 +825,15 @@ class QQMusicDownloaderGUI(QMainWindow):
         self.result_table.setItem(
             row, 4, QTableWidgetItem(f"{minutes:02d}:{seconds:02d}"))
 
+        # 可用格式
+        available_formats = self._get_available_formats(song)
+        self.result_table.setItem(row, 5, QTableWidgetItem(available_formats))
+
         # 下载按钮
         download_btn = QPushButton("下载")
         download_btn.clicked.connect(
             lambda _, song_index=row: self.download_song(song_list[song_index]))
-        self.result_table.setCellWidget(row, 5, download_btn)
+        self.result_table.setCellWidget(row, 6, download_btn)
 
     def _fill_album_row(self, row, album):
         """填充专辑行数据"""
@@ -872,6 +876,95 @@ class QQMusicDownloaderGUI(QMainWindow):
         elif isinstance(singers, dict):
             return singers.get("name", "未知歌手")
         return str(singers) if singers else "未知歌手"
+
+    def _get_available_formats(self, song):
+        """获取歌曲可用的音频格式"""
+        if not song.get("file"):
+            return "未知"
+
+        file_info = song["file"]
+        available_formats = []
+
+        # 检查各种格式的文件大小，大于0表示可用
+        format_map = {
+            "size_48aac": "M4A 48k",
+            "size_96aac": "M4A 96k",
+            "size_192aac": "M4A 192k",
+            "size_128mp3": "MP3 128k",
+            "size_320mp3": "MP3 320k",
+            "size_96ogg": "OGG 96k",
+            "size_192ogg": "OGG 192k",
+            "size_flac": "FLAC",
+        }
+
+        for size_key, format_name in format_map.items():
+            if file_info.get(size_key, 0) > 0:
+                available_formats.append(format_name)
+
+        # 检查size_new数组中的高品质格式
+        size_new = file_info.get("size_new", [])
+        if len(size_new) >= 6:
+            # size_new数组索引对应: [MASTER, ATMOS_2, ATMOS_51, FLAC, ?, ?]
+            if size_new[0] > 0:  # MASTER
+                available_formats.append("母带")
+            if size_new[1] > 0:  # ATMOS_2
+                available_formats.append("全景声")
+            if size_new[2] > 0:  # ATMOS_51
+                available_formats.append("臻品音质")
+
+        return ", ".join(available_formats) if available_formats else "无可用格式"
+
+    def _check_format_availability(self, song, requested_format):
+        """检查指定格式是否可用"""
+        if not song.get("file"):
+            return False, "无法获取文件信息"
+
+        file_info = song["file"]
+
+        # 格式映射到对应的size字段
+        format_size_map = {
+            "m4a": "size_192aac",  # 默认使用192k AAC
+            "128": "size_128mp3",
+            "320": "size_320mp3",
+            "flac": "size_flac",
+            "ATMOS_51": "size_new_2",  # size_new数组第3个元素
+            "ATMOS_2": "size_new_1",   # size_new数组第2个元素
+            "MASTER": "size_new_0",    # size_new数组第1个元素
+        }
+
+        if requested_format in ["ATMOS_51", "ATMOS_2", "MASTER"]:
+            # 处理size_new数组中的格式
+            size_new = file_info.get("size_new", [])
+            index_map = {"MASTER": 0, "ATMOS_2": 1, "ATMOS_51": 2}
+            index = index_map.get(requested_format)
+
+            if index is not None and len(size_new) > index:
+                if size_new[index] > 0:
+                    return True, ""
+                else:
+                    return False, f"该歌曲不支持{self._get_format_display_name(requested_format)}格式"
+            else:
+                return False, f"无法检查{self._get_format_display_name(requested_format)}格式可用性"
+        else:
+            # 处理普通格式
+            size_key = format_size_map.get(requested_format)
+            if size_key and file_info.get(size_key, 0) > 0:
+                return True, ""
+            else:
+                return False, f"该歌曲不支持{self._get_format_display_name(requested_format)}格式"
+
+    def _get_format_display_name(self, format_code):
+        """获取格式的显示名称"""
+        format_names = {
+            "m4a": "M4A",
+            "128": "MP3 128kbps",
+            "320": "MP3 320kbps",
+            "flac": "FLAC无损",
+            "ATMOS_51": "臻品音质2.0",
+            "ATMOS_2": "臻品全景声2.0",
+            "MASTER": "臻品母带2.0"
+        }
+        return format_names.get(format_code, format_code)
 
     def _get_album_name(self, album):
         """获取专辑名称"""
@@ -1065,11 +1158,15 @@ class QQMusicDownloaderGUI(QMainWindow):
         self.result_table.setItem(
             row, 4, QTableWidgetItem(f"{minutes:02d}:{seconds:02d}"))
 
+        # 可用格式
+        available_formats = self._get_available_formats(song)
+        self.result_table.setItem(row, 5, QTableWidgetItem(available_formats))
+
         # 下载按钮
         download_btn = QPushButton("下载")
         download_btn.clicked.connect(
             lambda _, song_index=row: self.download_song(song_list[song_index]))
-        self.result_table.setCellWidget(row, 5, download_btn)
+        self.result_table.setCellWidget(row, 6, download_btn)
 
     def get_playlist(self, disstid: int):
         """获取歌单歌曲"""
@@ -1082,6 +1179,17 @@ class QQMusicDownloaderGUI(QMainWindow):
     def download_song(self, song_info):
         """下载单首歌曲"""
         filetype = self.get_selected_quality()
+
+        # 检查格式可用性
+        is_available, error_msg = self._check_format_availability(
+            song_info, filetype)
+        if not is_available:
+            QMessageBox.warning(
+                self,
+                "格式不可用",
+                f"无法下载歌曲《{song_info.get('name', '未知')}》\n\n{error_msg}\n\n可用格式：{self._get_available_formats(song_info)}"
+            )
+            return
 
         # 使用用户设置的下载路径
         download_dir = Path(self.download_path)
@@ -1169,6 +1277,48 @@ class QQMusicDownloaderGUI(QMainWindow):
             QMessageBox.warning(self, "提示", "请选择要下载的歌曲")
             return
 
+        # 检查选中歌曲的格式可用性
+        filetype = self.get_selected_quality()
+        unavailable_songs = []
+
+        for song in selected_songs:
+            is_available, error_msg = self._check_format_availability(
+                song, filetype)
+            if not is_available:
+                unavailable_songs.append(
+                    f"《{song.get('name', '未知')}》: {error_msg}")
+
+        if unavailable_songs:
+            # 显示不可用歌曲的详细信息
+            msg = f"以下歌曲不支持{self._get_format_display_name(filetype)}格式：\n\n"
+            msg += "\n".join(unavailable_songs[:5])  # 最多显示5首
+            if len(unavailable_songs) > 5:
+                msg += f"\n... 还有{len(unavailable_songs) - 5}首歌曲"
+            msg += "\n\n是否继续下载其他可用的歌曲？"
+
+            reply = QMessageBox.question(
+                self, "格式不可用", msg,
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                QMessageBox.StandardButton.Yes
+            )
+
+            if reply == QMessageBox.StandardButton.No:
+                return
+
+            # 过滤掉不可用的歌曲
+            available_songs = []
+            for song in selected_songs:
+                is_available, _ = self._check_format_availability(
+                    song, filetype)
+                if is_available:
+                    available_songs.append(song)
+
+            selected_songs = available_songs
+
+            if not selected_songs:
+                QMessageBox.warning(self, "提示", "没有可下载的歌曲")
+                return
+
         # 切换到下载记录标签页
         self.tabs.setCurrentIndex(2)
 
@@ -1191,7 +1341,6 @@ class QQMusicDownloaderGUI(QMainWindow):
         download_dir = Path(self.download_path)
 
         # 启动批量下载线程
-        filetype = self.get_selected_quality()
         self.current_worker = WorkerThread(
             "download_multiple",
             downloader=self.downloader,
@@ -1376,7 +1525,7 @@ class QQMusicDownloaderGUI(QMainWindow):
             status_item = QTableWidgetItem("获取详细信息中...")
             status_item.setFlags(Qt.ItemFlag.ItemIsEnabled)
             self.playlist_link_table.setItem(i, 1, status_item)
-            self.playlist_link_table.setSpan(i, 1, 1, 4)  # 横向合并单元格
+            self.playlist_link_table.setSpan(i, 1, 1, 5)  # 横向合并单元格
 
         # 禁用获取歌单按钮
         self.get_playlist_btn.setEnabled(False)
@@ -1440,11 +1589,16 @@ class QQMusicDownloaderGUI(QMainWindow):
             self.playlist_link_table.setItem(
                 index, 4, QTableWidgetItem(f"{minutes:02d}:{seconds:02d}"))
 
+            # 可用格式
+            available_formats = self._get_available_formats(song_info)
+            self.playlist_link_table.setItem(
+                index, 5, QTableWidgetItem(available_formats))
+
             # 下载按钮
             download_btn = QPushButton("下载")
             download_btn.clicked.connect(
                 lambda _, song_index=index: self.download_playlist_link_song(song_index))
-            self.playlist_link_table.setCellWidget(index, 5, download_btn)
+            self.playlist_link_table.setCellWidget(index, 6, download_btn)
         else:
             # 搜索失败时显示"未找到"
             self.playlist_link_table.setItem(index, 1, QTableWidgetItem("未找到"))
@@ -1464,6 +1618,18 @@ class QQMusicDownloaderGUI(QMainWindow):
             return
 
         filetype = self.get_selected_quality()
+
+        # 检查格式可用性
+        is_available, error_msg = self._check_format_availability(
+            song_info, filetype)
+        if not is_available:
+            QMessageBox.warning(
+                self,
+                "格式不可用",
+                f"无法下载歌曲《{song_info.get('name', '未知')}》\n\n{error_msg}\n\n可用格式：{self._get_available_formats(song_info)}"
+            )
+            return
+
         download_dir = Path(self.download_path)
 
         # 切换到下载记录标签页
@@ -1512,6 +1678,48 @@ class QQMusicDownloaderGUI(QMainWindow):
             QMessageBox.warning(self, "提示", "请选择要下载的歌曲")
             return
 
+        # 检查选中歌曲的格式可用性
+        filetype = self.get_selected_quality()
+        unavailable_songs = []
+
+        for song in selected_songs:
+            is_available, error_msg = self._check_format_availability(
+                song, filetype)
+            if not is_available:
+                unavailable_songs.append(
+                    f"《{song.get('name', '未知')}》: {error_msg}")
+
+        if unavailable_songs:
+            # 显示不可用歌曲的详细信息
+            msg = f"以下歌曲不支持{self._get_format_display_name(filetype)}格式：\n\n"
+            msg += "\n".join(unavailable_songs[:5])  # 最多显示5首
+            if len(unavailable_songs) > 5:
+                msg += f"\n... 还有{len(unavailable_songs) - 5}首歌曲"
+            msg += "\n\n是否继续下载其他可用的歌曲？"
+
+            reply = QMessageBox.question(
+                self, "格式不可用", msg,
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                QMessageBox.StandardButton.Yes
+            )
+
+            if reply == QMessageBox.StandardButton.No:
+                return
+
+            # 过滤掉不可用的歌曲
+            available_songs = []
+            for song in selected_songs:
+                is_available, _ = self._check_format_availability(
+                    song, filetype)
+                if is_available:
+                    available_songs.append(song)
+
+            selected_songs = available_songs
+
+            if not selected_songs:
+                QMessageBox.warning(self, "提示", "没有可下载的歌曲")
+                return
+
         # 切换到下载记录标签页
         self.tabs.setCurrentIndex(2)
 
@@ -1531,7 +1739,6 @@ class QQMusicDownloaderGUI(QMainWindow):
             self.download_table.setItem(row, 3, QTableWidgetItem(""))
 
         # 启动批量下载线程
-        filetype = self.get_selected_quality()
         download_dir = Path(self.download_path)
 
         self.current_worker = WorkerThread(

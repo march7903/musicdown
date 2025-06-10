@@ -11,7 +11,7 @@ from PyQt6.QtWidgets import (QComboBox, QFileDialog, QGridLayout,
                              QMainWindow, QMessageBox, QProgressBar, QPushButton,
                              QRadioButton, QTabWidget, QTableWidget,
                              QTableWidgetItem, QVBoxLayout, QWidget, QTextEdit,
-                             QMenuBar, QMenu)
+                             QMenuBar, QMenu, QSpinBox)
 
 from api.qqmusic import QQMusicAPI
 from downloader.music_downloader import MusicDownloader
@@ -370,10 +370,17 @@ class QQMusicDownloaderGUI(QMainWindow):
         self.search_input.setPlaceholderText("输入关键词搜索...")
         self.search_input.returnPressed.connect(self.search)
 
+        self.limit_spinbox = QSpinBox()
+        self.limit_spinbox.setRange(1, 100)
+        self.limit_spinbox.setValue(20)
+        self.limit_spinbox.setToolTip("搜索结果条数 (1-100)")
+
         self.search_btn = QPushButton("搜索")
         self.search_btn.clicked.connect(self.search)
 
         search_layout.addWidget(self.search_input)
+        search_layout.addWidget(QLabel("条目数:"))
+        search_layout.addWidget(self.limit_spinbox)
         search_layout.addWidget(self.search_btn)
 
         main_layout.addLayout(search_layout)
@@ -667,18 +674,19 @@ class QQMusicDownloaderGUI(QMainWindow):
             return
 
         search_type_index = self.search_type_combo.currentIndex()
+        limit = self.limit_spinbox.value()
         self.result_table.setRowCount(0)  # 清空表格
 
         # 每次都创建新的工作线程
         if search_type_index == 0:  # 单曲搜索
             worker = WorkerThread(
-                "search_song", api=self.api, params={"query": query})
+                "search_song", api=self.api, params={"query": query, "limit": limit})
         elif search_type_index == 1:  # 专辑搜索
             worker = WorkerThread(
-                "search_album", api=self.api, params={"query": query})
+                "search_album", api=self.api, params={"query": query, "limit": limit})
         elif search_type_index == 2:  # 歌单搜索
             worker = WorkerThread(
-                "search_playlist", api=self.api, params={"query": query})
+                "search_playlist", api=self.api, params={"query": query, "limit": limit})
 
         # 连接信号
         worker.update_signal.connect(self.handle_worker_update)

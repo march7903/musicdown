@@ -110,6 +110,7 @@ class QQMusicAPI:
             搜索结果字典
         """
         try:
+            limit = min(limit, 100)
             result = await search.search_by_type(
                 keyword=keyword,
                 search_type=search.SearchType.SONG,
@@ -195,6 +196,7 @@ class QQMusicAPI:
             专辑搜索结果
         """
         try:
+            limit = min(limit, 100)
             result = await search.search_by_type(
                 keyword=keyword,
                 search_type=search.SearchType.ALBUM,
@@ -247,6 +249,7 @@ class QQMusicAPI:
             歌单搜索结果
         """
         try:
+            limit = min(limit, 100)
             result = await search.search_by_type(
                 keyword=keyword,
                 search_type=search.SearchType.SONGLIST,

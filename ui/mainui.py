@@ -1856,7 +1856,7 @@ class QQMusicDownloaderGUI(QMainWindow):
         about_action.triggered.connect(self.show_about)
 
         # 更新菜单状态
-        asyncio.ensure_future(self.update_menu_status())
+        asyncio.run(self.update_menu_status())
 
     async def update_menu_status(self):
         """更新菜单状态"""
@@ -1894,8 +1894,8 @@ class QQMusicDownloaderGUI(QMainWindow):
                         self, "登录成功",
                         f"欢迎! 用户ID: {user_info.get('musicid', 'Unknown')}"
                     )
-                    # 登录后异步更新菜单状态
-                    asyncio.ensure_future(self.update_menu_status())
+                    # 登录后更新菜单状态
+                    asyncio.run(self.update_menu_status())
 
         except ImportError as e:
             QMessageBox.warning(
@@ -1914,8 +1914,8 @@ class QQMusicDownloaderGUI(QMainWindow):
             if hasattr(self.api, 'logout'):
                 self.api.logout()
                 QMessageBox.information(self, "提示", "已成功登出")
-                # 登出后异步更新菜单状态
-                asyncio.ensure_future(self.update_menu_status())
+                # 登出后更新菜单状态
+                asyncio.run(self.update_menu_status())
             else:
                 QMessageBox.information(self, "提示", "当前API不支持登出功能")
         except Exception as e:

@@ -374,14 +374,14 @@ class QQMusicAPI:
                     return False, qr.data, error_msg
 
                 elif event == QRCodeLoginEvents.SCAN:
-                    logger.info("二维码已扫描，等待用户确认登录")
+                    logger.info("等待扫描二维码")
                     if callback:
-                        callback("scanned", "二维码已扫描，等待确认")
+                        callback("waiting_scan", "等待扫描二维码")
 
                 elif event == QRCodeLoginEvents.CONF:
-                    logger.info("用户正在确认登录")
+                    logger.info("已扫码未确认登录")
                     if callback:
-                        callback("waiting_confirm", "用户正在确认登录")
+                        callback("waiting_confirm", "已扫码未确认登录")
 
                 else:
                     logger.warning("出现未知状态")

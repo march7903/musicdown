@@ -223,6 +223,8 @@ class QQMusicAPI:
         """
         try:
             result = await album.get_song(album_mid, num=100, page=1)
+            with open("json/album_detail_result.json", "w", encoding="utf-8") as f:
+                json.dump(result, f, indent=4, ensure_ascii=False)
             return {
                 "code": 0,
                 "songs": result if isinstance(result, list) else [],
@@ -323,18 +325,17 @@ class QQMusicAPI:
             callback: 回调函数
 
         Returns:
-            (成功状态, 二维码路径, 错误信息)
+            (成功状态, 二维码数据, 错误信息)
         """
         try:
             qr_type = QRLoginType.QQ if login_type.upper() == "QQ" else QRLoginType.WX
             qr = await get_qrcode(qr_type)
 
-            # 保存二维码图片
-            qr_path = qr.save()
-            logger.info(f"二维码已保存至: {qr_path}")
+            # 直接传递二维码字节数据，不保存到文件
+            logger.info("二维码已生成，准备显示")
 
             if callback:
-                callback("qr_generated", str(qr_path))
+                callback("qr_generated", qr.data)
 
             # 轮询检查登录状态
             max_attempts = 60  # 最多检查60次，约2分钟
@@ -349,28 +350,36 @@ class QQMusicAPI:
                         self.save_credential(credential)
                         if callback:
                             callback("login_success", credential)
-                        return True, qr_path, ""
+                        return True, qr.data, ""
 
                     elif event == QRCodeLoginEvents.TIMEOUT:
                         error_msg = "二维码已过期"
                         logger.error(error_msg)
                         if callback:
                             callback("timeout", error_msg)
-                        return False, qr_path, error_msg
+                        return False, qr.data, error_msg
+
+                    elif event == QRCodeLoginEvents.REFUSE:
+                        error_msg = "用户拒绝登录"
+                        logger.error(error_msg)
+                        if callback:
+                            callback("error", error_msg)
+                        return False, qr.data, error_msg
 
                     elif event == QRCodeLoginEvents.SCAN:
                         if last_status != "scan":
-                            logger.info("已扫描，请在手机上确认登录")
+                            logger.info("二维码已扫描，等待手机确认登录")
                             if callback:
-                                callback("scanned", "请在手机上确认登录")
+                                callback("scanned", "二维码已扫描，请在手机上确认登录")
                             last_status = "scan"
                         await asyncio.sleep(2)
 
-                    elif hasattr(QRCodeLoginEvents, 'WAITING') and event == QRCodeLoginEvents.WAITING:
-                        if last_status != "waiting":
+                    elif event == QRCodeLoginEvents.CONF:
+                        if last_status != "conf":
+                            logger.info("已扫码，等待确认登录")
                             if callback:
-                                callback("waiting", "等待扫描二维码")
-                            last_status = "waiting"
+                                callback("waiting_confirm", "已扫码，等待手机确认登录")
+                            last_status = "conf"
                         await asyncio.sleep(2)
 
                     else:
@@ -386,14 +395,14 @@ class QQMusicAPI:
             error_msg = "登录超时，请重试"
             if callback:
                 callback("timeout", error_msg)
-            return False, qr_path, error_msg
+            return False, qr.data, error_msg
 
         except Exception as e:
             error_msg = f"二维码登录失败: {e}"
             logger.error(error_msg)
             if callback:
                 callback("error", error_msg)
-            return False, "", error_msg
+            return False, b"", error_msg
 
     async def login_with_phone(self, phone: int, country_code: int = 86, callback=None) -> tuple:
         """手机号登录

@@ -7,10 +7,10 @@ import sys
 from pathlib import Path
 from PyQt6.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QTabWidget, QWidget,
-    QLabel, QLineEdit, QPushButton, QTextEdit, QMessageBox,
+    QLabel, QLineEdit, QPushButton, QMessageBox,
     QProgressBar, QGroupBox, QFormLayout, QComboBox
 )
-from PyQt6.QtCore import QThread, pyqtSignal, QTimer, Qt
+from PyQt6.QtCore import QThread, pyqtSignal, Qt
 from PyQt6.QtGui import QPixmap, QFont
 
 from api.qqmusic import QQMusicAPI
@@ -22,7 +22,7 @@ class LoginWorker(QThread):
     login_success = pyqtSignal(dict)  # 登录成功信号
     login_failed = pyqtSignal(str)    # 登录失败信号
     status_update = pyqtSignal(str)   # 状态更新信号
-    qr_generated = pyqtSignal(str)    # 二维码生成信号
+    qr_generated = pyqtSignal(bytes)  # 二维码生成信号（字节数据）
 
     def __init__(self, adapter: QQMusicAPI):
         super().__init__()
@@ -64,27 +64,9 @@ class LoginWorker(QThread):
 
             # 定义回调函数
             def login_callback(event_type, data):
-                try:
-                    if event_type == "qr_generated":
-                        # 确保传递字符串类型
-                        qr_path = str(data) if data else ""
-                        self.qr_generated.emit(qr_path)
-                    elif event_type == "scanned":
-                        self.status_update.emit(str(data))
-                    elif event_type == "waiting":
-                        self.status_update.emit(str(data))
-                    elif event_type == "login_success":
-                        user_info = self.adapter.get_user_info()
-                        self.login_success.emit(user_info)
-                    elif event_type == "timeout":
-                        self.login_failed.emit(str(data))
-                    elif event_type == "error":
-                        self.login_failed.emit(str(data))
-                except Exception as e:
-                    print(f"回调处理错误: {e}")
-                    self.login_failed.emit(f"回调处理错误: {str(e)}")
+                self._handle_login_callback(event_type, data)
 
-            success, qr_path, error_msg = loop.run_until_complete(
+            success, _, error_msg = loop.run_until_complete(
                 self.adapter.login_with_qr(self.login_type, login_callback)
             )
 
@@ -96,6 +78,27 @@ class LoginWorker(QThread):
         finally:
             loop.close()
 
+    def _handle_login_callback(self, event_type, data):
+        """处理登录回调事件"""
+        try:
+            if event_type == "qr_generated":
+                # data 现在是二维码的字节数据
+                self.qr_generated.emit(data)
+            elif event_type == "scanned":
+                self.status_update.emit(str(data))
+            elif event_type == "waiting":
+                self.status_update.emit(str(data))
+            elif event_type == "login_success":
+                user_info = self.adapter.get_user_info()
+                self.login_success.emit(user_info)
+            elif event_type == "timeout":
+                self.login_failed.emit(str(data))
+            elif event_type == "error":
+                self.login_failed.emit(str(data))
+        except Exception as e:
+            print(f"回调处理错误: {e}")
+            self.login_failed.emit(f"回调处理错误: {str(e)}")
+
     def _phone_login(self):
         """手机号登录"""
         try:
@@ -105,7 +108,7 @@ class LoginWorker(QThread):
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
 
-            success = loop.run_until_complete(
+            success, error_msg = loop.run_until_complete(
                 self.adapter.login_with_phone(self.phone, self.country_code)
             )
 
@@ -113,7 +116,7 @@ class LoginWorker(QThread):
                 user_info = self.adapter.get_user_info()
                 self.login_success.emit(user_info)
             else:
-                self.login_failed.emit("手机号登录失败")
+                self.login_failed.emit(error_msg or "手机号登录失败")
 
         except Exception as e:
             self.login_failed.emit(f"手机号登录错误: {str(e)}")
@@ -199,7 +202,7 @@ class QRLoginWidget(QWidget):
 
         # 连接信号
         self.worker.status_update.connect(self.update_status)
-        self.worker.qr_generated.connect(self.show_qr)
+        self.worker.qr_generated.connect(self.show_qr_from_data)
         self.worker.login_success.connect(self.on_login_success)
         self.worker.login_failed.connect(self.on_login_failed)
 
@@ -231,8 +234,29 @@ class QRLoginWidget(QWidget):
         """更新状态"""
         self.status_label.setText(status)
 
+    def show_qr_from_data(self, qr_data: bytes):
+        """从字节数据显示二维码"""
+        try:
+            if qr_data:
+                pixmap = QPixmap()
+                if pixmap.loadFromData(qr_data):
+                    scaled_pixmap = pixmap.scaled(280, 280, Qt.AspectRatioMode.KeepAspectRatio,
+                                                  Qt.TransformationMode.SmoothTransformation)
+                    self.qr_label.setPixmap(scaled_pixmap)
+                    self.status_label.setText("请使用手机扫描二维码")
+                    print("二维码已从内存加载并显示")
+                else:
+                    self.status_label.setText("二维码加载失败")
+                    print("无法从字节数据加载二维码图片")
+            else:
+                self.status_label.setText("二维码数据为空")
+                print("二维码数据为空")
+        except Exception as e:
+            self.status_label.setText(f"显示二维码时出错: {str(e)}")
+            print(f"显示二维码时出错: {e}")
+
     def show_qr(self, qr_path: str):
-        """显示二维码"""
+        """显示二维码（兼容旧版本，从文件路径加载）"""
         try:
             qr_file = Path(qr_path)
             if qr_file.exists():
@@ -252,135 +276,6 @@ class QRLoginWidget(QWidget):
         except Exception as e:
             self.status_label.setText(f"显示二维码时出错: {str(e)}")
             print(f"显示二维码时出错: {e}")
-
-    def on_login_success(self, user_info: dict):
-        """登录成功"""
-        self.reset_ui()
-        self.status_label.setText(
-            f"登录成功! 用户ID: {user_info.get('musicid', 'Unknown')}")
-
-        # 通知父窗口
-        if hasattr(self.parent(), 'on_login_success'):
-            self.parent().on_login_success(user_info)
-
-    def on_login_failed(self, error: str):
-        """登录失败"""
-        self.reset_ui()
-        self.status_label.setText(f"登录失败: {error}")
-        QMessageBox.warning(self, "登录失败", error)
-
-
-class PhoneLoginWidget(QWidget):
-    """手机号登录组件"""
-
-    def __init__(self, adapter: QQMusicAPI):
-        super().__init__()
-        self.adapter = adapter
-        self.worker = None
-        self.init_ui()
-
-    def init_ui(self):
-        layout = QVBoxLayout()
-
-        # 手机号输入
-        form_group = QGroupBox("手机号登录")
-        form_layout = QFormLayout()
-
-        self.country_combo = QComboBox()
-        self.country_combo.addItems(["+86 (中国)", "+1 (美国)", "+44 (英国)"])
-        form_layout.addRow("国家/地区:", self.country_combo)
-
-        self.phone_edit = QLineEdit()
-        self.phone_edit.setPlaceholderText("请输入手机号")
-        form_layout.addRow("手机号:", self.phone_edit)
-
-        form_group.setLayout(form_layout)
-        layout.addWidget(form_group)
-
-        # 状态显示
-        self.status_label = QLabel("请输入手机号")
-        self.status_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(self.status_label)
-
-        # 进度条
-        self.progress_bar = QProgressBar()
-        self.progress_bar.setVisible(False)
-        layout.addWidget(self.progress_bar)
-
-        # 按钮
-        button_layout = QHBoxLayout()
-        self.login_btn = QPushButton("发送验证码")
-        self.login_btn.clicked.connect(self.start_phone_login)
-
-        self.cancel_btn = QPushButton("取消")
-        self.cancel_btn.clicked.connect(self.cancel_login)
-        self.cancel_btn.setEnabled(False)
-
-        button_layout.addWidget(self.login_btn)
-        button_layout.addWidget(self.cancel_btn)
-        layout.addLayout(button_layout)
-
-        layout.addStretch()
-        self.setLayout(layout)
-
-    def start_phone_login(self):
-        """开始手机号登录"""
-        phone_text = self.phone_edit.text().strip()
-        if not phone_text:
-            QMessageBox.warning(self, "输入错误", "请输入手机号")
-            return
-
-        try:
-            phone = int(phone_text)
-        except ValueError:
-            QMessageBox.warning(self, "输入错误", "手机号格式不正确")
-            return
-
-        # 获取国家代码
-        country_text = self.country_combo.currentText()
-        country_code = 86  # 默认中国
-        if "+1" in country_text:
-            country_code = 1
-        elif "+44" in country_text:
-            country_code = 44
-
-        if self.worker and self.worker.isRunning():
-            return
-
-        self.worker = LoginWorker(self.adapter)
-        self.worker.set_phone_login(phone, country_code)
-
-        # 连接信号
-        self.worker.status_update.connect(self.update_status)
-        self.worker.login_success.connect(self.on_login_success)
-        self.worker.login_failed.connect(self.on_login_failed)
-
-        # 更新UI状态
-        self.login_btn.setEnabled(False)
-        self.cancel_btn.setEnabled(True)
-        self.progress_bar.setVisible(True)
-        self.progress_bar.setRange(0, 0)
-
-        self.worker.start()
-
-    def cancel_login(self):
-        """取消登录"""
-        if self.worker and self.worker.isRunning():
-            self.worker.terminate()
-            self.worker.wait()
-
-        self.reset_ui()
-
-    def reset_ui(self):
-        """重置UI状态"""
-        self.login_btn.setEnabled(True)
-        self.cancel_btn.setEnabled(False)
-        self.progress_bar.setVisible(False)
-        self.status_label.setText("请输入手机号")
-
-    def update_status(self, status: str):
-        """更新状态"""
-        self.status_label.setText(status)
 
     def on_login_success(self, user_info: dict):
         """登录成功"""
@@ -423,18 +318,9 @@ class LoginDialog(QDialog):
         title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(title_label)
 
-        # 选项卡
-        self.tab_widget = QTabWidget()
-
-        # 二维码登录选项卡
+        # 只保留二维码登录
         self.qr_widget = QRLoginWidget(self.adapter)
-        self.tab_widget.addTab(self.qr_widget, "二维码登录")
-
-        # 手机号登录选项卡
-        self.phone_widget = PhoneLoginWidget(self.adapter)
-        self.tab_widget.addTab(self.phone_widget, "手机号登录")
-
-        layout.addWidget(self.tab_widget)
+        layout.addWidget(self.qr_widget)
 
         # 底部按钮
         button_layout = QHBoxLayout()
@@ -446,11 +332,21 @@ class LoginDialog(QDialog):
         layout.addLayout(button_layout)
         self.setLayout(layout)
 
-    def on_login_success(self, user_info: dict):
-        """登录成功回调"""
+        # 连接二维码登录成功信号，登录成功后自动关闭窗口
+        self.qr_widget_login_success_connected = False
+        self.qr_widget_generate_qr_orig = self.qr_widget.generate_qr
+
+        def generate_qr_with_connect():
+            result = self.qr_widget_generate_qr_orig()
+            if self.qr_widget.worker and not self.qr_widget_login_success_connected:
+                self.qr_widget.worker.login_success.connect(
+                    self.on_login_success)
+                self.qr_widget_login_success_connected = True
+            return result
+        self.qr_widget.generate_qr = generate_qr_with_connect
+
+    def on_login_success(self, user_info):
         self.user_info = user_info
-        QMessageBox.information(self, "登录成功",
-                                f"欢迎! 用户ID: {user_info.get('musicid', 'Unknown')}")
         self.accept()
 
     def get_user_info(self) -> dict:

@@ -46,7 +46,7 @@ class MusicDownloader:
             self.log("正在获取下载链接...")
 
             # 使用新的统一API获取下载链接
-            use_credential = self.qq_music_api.is_logged_in()
+            use_credential = await self.qq_music_api.is_logged_in()
             if use_credential:
                 self.log("使用登录凭证获取下载链接...")
             else:

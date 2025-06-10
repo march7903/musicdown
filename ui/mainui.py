@@ -726,8 +726,13 @@ class QQMusicDownloaderGUI(QMainWindow):
             self.display_album_songs(update_data)
 
         elif update_type == "playlist_songs":
-            self.playlist_songs = update_data["songs"]
-            self.display_playlist_songs(update_data)
+            if update_data.get("code") == 0:
+                songs = update_data.get("songs", [])
+                self.playlist_songs = songs
+                self.display_playlist_songs(update_data)
+            else:
+                error_msg = update_data.get("error", "未知错误")
+                QMessageBox.warning(self, "错误", f"获取歌单歌曲失败: {error_msg}")
 
         elif update_type == "download_complete":
             self.update_download_record(update_data)
@@ -769,6 +774,11 @@ class QQMusicDownloaderGUI(QMainWindow):
     def _display_album_results(self, albums):
         """显示专辑搜索结果"""
         self.search_results = albums
+
+        # 清空表格内容，包括所有的widget
+        self.result_table.clearContents()
+        self.result_table.setRowCount(0)
+
         self.result_table.setColumnCount(4)
         self.result_table.setHorizontalHeaderLabels(
             ["专辑名", "歌手", "发行时间", "操作"])
@@ -780,6 +790,11 @@ class QQMusicDownloaderGUI(QMainWindow):
     def _display_playlist_results(self, playlists):
         """显示歌单搜索结果"""
         self.search_results = playlists
+
+        # 清空表格内容，包括所有的widget
+        self.result_table.clearContents()
+        self.result_table.setRowCount(0)
+
         self.result_table.setColumnCount(4)
         self.result_table.setHorizontalHeaderLabels(
             ["歌单名", "创建者", "歌曲数量", "操作"])
@@ -790,6 +805,10 @@ class QQMusicDownloaderGUI(QMainWindow):
 
     def _setup_song_table(self):
         """设置歌曲表格的列"""
+        # 清空表格内容，包括所有的widget
+        self.result_table.clearContents()
+        self.result_table.setRowCount(0)
+
         self.result_table.setColumnCount(6)
         self.result_table.setHorizontalHeaderLabels(
             ["", "歌曲名", "歌手", "专辑", "时长", "操作"])
@@ -963,6 +982,11 @@ class QQMusicDownloaderGUI(QMainWindow):
     def display_playlist_songs(self, playlist_data):
         """显示歌单歌曲"""
         songs = playlist_data.get("songs", playlist_data.get("songList", []))
+
+        if not songs:
+            QMessageBox.warning(self, "提示", "该歌单没有歌曲或获取失败")
+            return
+
         self.playlist_songs = songs
 
         self._setup_song_table()

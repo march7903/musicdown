@@ -266,21 +266,29 @@ class QQMusicAPI:
 
     async def playlist_detail(self, playlist_id: int) -> Dict:
         """获取歌单详细信息
-        
+
         Args:
             playlist_id: 歌单ID
-            
+
         Returns:
             歌单详细信息和歌曲列表
         """
         try:
+            # 根据文档，get_songlist返回的是歌曲列表，不是字典
             result = await songlist.get_songlist(playlist_id, dirid=0)
-            return {
-                "code": 0,
-                "songs": result if isinstance(result, list) else [],
-                "songList": result if isinstance(result, list) else [],
-                "total": len(result) if isinstance(result, list) else 0
-            }
+
+            if isinstance(result, list):
+                # 正常情况：返回歌曲列表
+                return {
+                    "code": 0,
+                    "songs": result,
+                    "songList": result,
+                    "total": len(result)
+                }
+            else:
+                logger.warning(f"歌单详情返回了意外的数据类型: {type(result)}")
+                return {"code": -1, "songs": [], "songList": [], "total": 0, "error": f"意外的数据类型: {type(result)}"}
+
         except Exception as e:
             logger.error(f"获取歌单详情失败: {e}")
             return {"code": -1, "songs": [], "songList": [], "total": 0, "error": str(e)}
@@ -295,7 +303,7 @@ class QQMusicAPI:
             歌词信息
         """
         try:
-            result = await lyric.get_lyric(song_mid)
+            result = await lyric.get_lyric(song_mid, trans=True, roma=True)
             with open("json/lyric_result.json", "w", encoding="utf-8") as f:
                 json.dump(result, f, indent=4, ensure_ascii=False)
             if isinstance(result, dict):

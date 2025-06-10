@@ -16,6 +16,7 @@ from PyQt6.QtWidgets import (QComboBox, QFileDialog, QGridLayout,
 from api.qqmusic import QQMusicAPI
 from downloader.music_downloader import MusicDownloader
 from utils.formatters import clean_html_tags
+from utils.logger import logger
 
 
 class WorkerThread(QThread):
@@ -291,19 +292,19 @@ class WorkerThread(QThread):
         })
 
     def run(self):
-        print(f"Starting new thread for task: {self.task_type}")
+        logger.info(f"Starting new thread for task: {self.task_type}")
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         try:
             loop.run_until_complete(self.run_task())
         except Exception as e:
-            print(f"Error in thread: {e}")
+            logger.error(f"Error in thread: {e}")
             import traceback
             traceback.print_exc()
         finally:
             # 不要关闭事件循环，仅清理它
             loop.run_until_complete(loop.shutdown_asyncgens())
-        print(f"Thread completed for task: {self.task_type}")
+        logger.info(f"Thread completed for task: {self.task_type}")
 
 
 class QQMusicDownloaderGUI(QMainWindow):
@@ -1471,7 +1472,7 @@ class QQMusicDownloaderGUI(QMainWindow):
                         'download_path', str(Path.home() / "Downloads"))
                     self._saved_quality = config.get('quality', '320')
         except Exception as e:
-            print(f"加载配置文件失败: {e}")
+            logger.warning(f"加载配置文件失败: {e}")
 
     def save_config(self):
         """保存配置文件"""
@@ -1492,7 +1493,7 @@ class QQMusicDownloaderGUI(QMainWindow):
             with open(self.config_file, 'w', encoding='utf-8') as f:
                 json.dump(existing_config, f, ensure_ascii=False, indent=2)
         except Exception as e:
-            print(f"保存配置文件失败: {e}")
+            logger.warning(f"保存配置文件失败: {e}")
 
     async def search_song_for_download(self, song_name, singer_name):
         """搜索单首歌曲用于下载"""
@@ -1868,9 +1869,10 @@ class QQMusicDownloaderGUI(QMainWindow):
             try:
                 is_logged_in = await self.api.is_logged_in()
                 # 可以根据登录状态启用/禁用相关菜单项
-                print(f"登录状态: {'已登录' if is_logged_in else '未登录'}")
+                logger.info(
+                    f"登录状态: {'已登录' if is_logged_in else '未登录'}")
             except Exception as e:
-                print(f"检查登录状态时出错: {e}")
+                logger.warning(f"检查登录状态时出错: {e}")
                 is_logged_in = False
 
     def show_login_dialog(self):
@@ -1989,7 +1991,7 @@ class QQMusicDownloaderGUI(QMainWindow):
             with open(self.config_file, 'w', encoding='utf-8') as f:
                 json.dump(existing_config, f, ensure_ascii=False, indent=2)
         except Exception as e:
-            print(f"保存API设置失败: {e}")
+            logger.warning(f"保存API设置失败: {e}")
 
     def show_about(self):
         """显示关于对话框"""

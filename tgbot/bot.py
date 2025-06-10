@@ -5,9 +5,11 @@ import sys
 import os
 from pathlib import Path
 
+from utils.logger import logger
+
 # 确保可以导入项目根目录的模块
 current_dir = Path(__file__).parent
-print(current_dir)
+logger.debug(current_dir)
 project_root = current_dir.parent
 sys.path.insert(0, str(project_root))
 
@@ -46,7 +48,7 @@ class QQMusicBot:
                     module.register(self.app)
 
     def run(self):
-        print("QQ音乐Telegram机器人启动中...")
+        logger.info("QQ音乐Telegram机器人启动中...")
         self.app.run_polling()
 
 

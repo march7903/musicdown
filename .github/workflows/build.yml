@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
+        os: [windows-latest, ubuntu-latest]
         arch: [x64]
 
     runs-on: ${{ matrix.os }}
@@ -113,7 +113,7 @@ jobs:
         if: ${{ runner.os != 'Windows' }}
         shell: bash
         run: |
-          mv build/main.dist musicdown
+          mv build/main.dist build/musicdown
           cd build
           zip -r ../upload/musicdown-${{ steps.info.outputs.version }}-${{ runner.os }}-${{ steps.arch.outputs.arch }}.zip musicdown
 

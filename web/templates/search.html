@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    <form action="/search" method="get">
+        <input type="text" name="q" placeholder="Search song" required>
+        <button type="submit">Search</button>
+    </form>
+    <table border="1">
+        <tr><th>Title</th><th>Artists</th><th>Action</th></tr>
+        {% for song in songs %}
+        <tr>
+            <td>{{ song['name'] }}</td>
+            <td>{% for s in song['singer'] %}{{ s['name'] }} {% endfor %}</td>
+            <td><a href="/download/{{ song['mid'] }}">Download</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p><a href="/">Home</a></p>
+</body>
+</html>
+

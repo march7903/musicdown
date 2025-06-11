@@ -10,13 +10,20 @@
         <input type="text" name="q" placeholder="Search song" required>
         <button type="submit">Search</button>
     </form>
+    {% if use_light_mode %}
+    <p style="color: green;">轻量下载模式：点击后浏览器直接下载。</p>
+    {% endif %}
     <table border="1">
         <tr><th>Title</th><th>Artists</th><th>Action</th></tr>
         {% for song in songs %}
         <tr>
             <td>{{ song['name'] }}</td>
             <td>{% for s in song['singer'] %}{{ s['name'] }} {% endfor %}</td>
-            <td><a href="/download/{{ song['mid'] }}">Download</a></td>
+            <td>
+                <a href="/download/{{ song['mid'] }}">
+                    {% if use_light_mode %}Direct Download{% else %}Download{% endif %}
+                </a>
+            </td>
         </tr>
         {% endfor %}
     </table>

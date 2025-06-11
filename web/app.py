@@ -39,7 +39,10 @@ def login_callback(event: str, data):
 async def index(request: Request):
     if not await qq_api.is_logged_in():
         return RedirectResponse("/login")
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(
+        "index.html",
+        {"request": request, "use_light_mode": config.LIGHT_DOWNLOAD_MODE},
+    )
 
 
 @app.get("/login", response_class=HTMLResponse)
@@ -66,10 +69,16 @@ async def login_status_api():
 @app.get("/search", response_class=HTMLResponse)
 async def search(request: Request, q: str = ""):
     if not q:
-        return templates.TemplateResponse("search.html", {"request": request, "songs": []})
+        return templates.TemplateResponse(
+            "search.html",
+            {"request": request, "songs": [], "use_light_mode": config.LIGHT_DOWNLOAD_MODE},
+        )
     result = await qq_api.search(q, limit=20, page=1)
     songs = result.get("songs", [])
-    return templates.TemplateResponse("search.html", {"request": request, "songs": songs})
+    return templates.TemplateResponse(
+        "search.html",
+        {"request": request, "songs": songs, "use_light_mode": config.LIGHT_DOWNLOAD_MODE},
+    )
 
 
 @app.get("/download/{mid}")
@@ -78,7 +87,14 @@ async def download(mid: str):
     if detail.get("code") != 0:
         return JSONResponse({"error": "Song not found"}, status_code=404)
     song_info = detail.get("data")
-    path = await music_downloader.download_song(song_info, Path("downloads"), config.DEFAULT_QUALITY)
+    if config.LIGHT_DOWNLOAD_MODE:
+        song_url_result = await qq_api.song_url(song_info["mid"], config.DEFAULT_QUALITY)
+        if song_url_result.get("code") == 0 and song_url_result.get("url"):
+            return RedirectResponse(song_url_result["url"])
+        return JSONResponse({"error": "Cannot fetch song URL"}, status_code=500)
+    path = await music_downloader.download_song(
+        song_info, Path("downloads"), config.DEFAULT_QUALITY
+    )
     if not path:
         return JSONResponse({"error": "Download failed"}, status_code=500)
     return FileResponse(path, filename=path.name)

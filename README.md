@@ -16,6 +16,13 @@ docker build -t musicdown-web .
 docker run -p 8000:8000 musicdown-web
 ```
 
+To enable lightweight download mode where the browser handles file downloads,
+start the container with the `USE_LIGHT_DOWNLOAD_MODE` environment variable:
+
+```bash
+docker run -p 8000:8000 -e USE_LIGHT_DOWNLOAD_MODE=true musicdown-web
+```
+
 3. Open `http://localhost:8000` in your browser. You will be prompted to scan a QR code for login and can then search and download songs.
 
 The downloads will be stored inside the container under `/app/downloads`.

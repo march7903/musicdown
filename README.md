@@ -27,3 +27,18 @@ docker run -p 8000:8000 -e USE_LIGHT_DOWNLOAD_MODE=true musicdown-web
 
 The downloads will be stored inside the container under `/app/downloads`.
 
+### Using Docker Compose
+
+Alternatively you can start the service with `docker-compose` which will build the
+image and mount a local `downloads` directory:
+
+```bash
+docker-compose up --build
+```
+
+Enable lightweight mode via environment variable:
+
+```bash
+USE_LIGHT_DOWNLOAD_MODE=true docker-compose up --build
+```
+

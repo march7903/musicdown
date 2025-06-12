@@ -140,7 +140,9 @@ class QQMusicAPI:
             歌曲详细信息
         """
         try:
-            result = await song.get_song_detail(song_mid)
+            # qqmusic_api.song 模块中并未提供 get_song_detail 方法，
+            # 正确的接口为 get_detail
+            result = await song.get_detail(song_mid)
             return {"code": 0, "data": result}
         except Exception as e:
             logger.error(f"获取歌曲详情失败: {e}")

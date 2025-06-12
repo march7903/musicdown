@@ -1,6 +1,13 @@
 from fastapi import FastAPI, Request, Response, Depends
-from fastapi.responses import HTMLResponse, StreamingResponse, FileResponse, RedirectResponse, JSONResponse
+from fastapi.responses import (
+    HTMLResponse,
+    StreamingResponse,
+    FileResponse,
+    RedirectResponse,
+    JSONResponse,
+)
 from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 import asyncio
 import io
@@ -8,9 +15,12 @@ import io
 from api.qqmusic import QQMusicAPI
 from downloader.music_downloader import MusicDownloader
 from utils.config import config
+from utils.formatters import format_singers, format_interval, clean_html_tags
 
 app = FastAPI(title="Music Downloader Web")
-templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
+BASE_DIR = Path(__file__).parent
+templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 
 qq_api = QQMusicAPI()
 music_downloader = MusicDownloader()
@@ -33,6 +43,39 @@ def login_callback(event: str, data):
         login_status = "success"
     elif event in {"timeout", "refused", "error"}:
         login_status = event
+
+
+def get_available_formats(song: dict) -> str:
+    """Return human readable available audio formats"""
+    if not song.get("file"):
+        return "未知"
+    file_info = song["file"]
+    available = []
+    format_map = {
+        "size_48aac": "M4A 48k",
+        "size_96aac": "M4A 96k",
+        "size_192aac": "M4A 192k",
+        "size_128mp3": "MP3 128k",
+        "size_320mp3": "MP3 320k",
+        "size_96ogg": "OGG 96k",
+        "size_192ogg": "OGG 192k",
+        "size_flac": "FLAC",
+    }
+
+    for key, name in format_map.items():
+        if file_info.get(key, 0) > 0:
+            available.append(name)
+
+    size_new = file_info.get("size_new", [])
+    if len(size_new) >= 6:
+        if size_new[0] > 0:
+            available.append("母带")
+        if size_new[1] > 0:
+            available.append("全景声")
+        if size_new[2] > 0:
+            available.append("臻品音质")
+
+    return ", ".join(available) if available else "无可用格式"
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -71,13 +114,31 @@ async def search(request: Request, q: str = ""):
     if not q:
         return templates.TemplateResponse(
             "search.html",
-            {"request": request, "songs": [], "use_light_mode": config.LIGHT_DOWNLOAD_MODE},
+            {
+                "request": request,
+                "songs": [],
+                "use_light_mode": config.LIGHT_DOWNLOAD_MODE,
+            },
         )
     result = await qq_api.search(q, limit=20, page=1)
-    songs = result.get("songs", [])
+    songs = []
+    for s in result.get("songs", []):
+        songs.append({
+            "name": clean_html_tags(s.get("name", "")),
+            "mid": s.get("mid", ""),
+            "singers": format_singers(s.get("singer", [])),
+            "album_name": clean_html_tags(s.get("album", {}).get("name", "")),
+            "duration": format_interval(s.get("interval", 0)),
+            "formats": get_available_formats(s),
+        })
     return templates.TemplateResponse(
         "search.html",
-        {"request": request, "songs": songs, "use_light_mode": config.LIGHT_DOWNLOAD_MODE},
+        {
+            "request": request,
+            "songs": songs,
+            "query": q,
+            "use_light_mode": config.LIGHT_DOWNLOAD_MODE,
+        },
     )
 
 

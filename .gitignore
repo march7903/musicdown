@@ -1,7 +1,6 @@
 __pycache__
 .idea
 logs/
-json/
 bot/
 decrypt.py
 downloads/

@@ -1,0 +1,2102 @@
+[
+    {
+        "albummid": "0008htf31RWknJ",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "<em>周深</em>  2025-06-08",
+        "docid": "11575555342679450335",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 68646168,
+        "is_intervene": 2,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "桂花谣",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M0000008htf31RWknJ_1.jpg",
+        "pic_icon": "",
+        "pmid": "0008htf31RWknJ_1",
+        "publish_date": "2025-06-08",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "<em>周深</em>",
+        "singer_id": "199509",
+        "singer_list": [
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            }
+        ],
+        "song_num": 3,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/68/album_68646168_0.json.z"
+    },
+    {
+        "albummid": "003szpvI3LMhQ7",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 1,
+            "award_label": "白金史诗唱片",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "<em>周深</em>  2024-05-19",
+        "docid": "6657283404884702690",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 50396027,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "反深代词",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M000003szpvI3LMhQ7_1.jpg",
+        "pic_icon": "",
+        "pmid": "003szpvI3LMhQ7_1",
+        "publish_date": "2024-05-19",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "<em>周深</em>",
+        "singer_id": "199509",
+        "singer_list": [
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            }
+        ],
+        "song_num": 14,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/27/album_50396027_0.json.z"
+    },
+    {
+        "albummid": "00406KUN2ZVEPM",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "<em>周深</em>  2025-05-18",
+        "docid": "2611631732502971637",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 67636135,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "小深情",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M00000406KUN2ZVEPM_1.jpg",
+        "pic_icon": "",
+        "pmid": "00406KUN2ZVEPM_1",
+        "publish_date": "2025-05-18",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "<em>周深</em>",
+        "singer_id": "199509",
+        "singer_list": [
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            }
+        ],
+        "song_num": 2,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/35/album_67636135_0.json.z"
+    },
+    {
+        "albummid": "000GJWeQ1Sx0Is",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 1,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "<em>周深</em>  2017-11-06",
+        "docid": "8139562424552770542",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 2789090,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "深的深",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M000000GJWeQ1Sx0Is_2.jpg",
+        "pic_icon": "",
+        "pmid": "000GJWeQ1Sx0Is_2",
+        "publish_date": "2017-11-06",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "<em>周深</em>",
+        "singer_id": "199509",
+        "singer_list": [
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            }
+        ],
+        "song_num": 10,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/90/album_2789090_0.json.z"
+    },
+    {
+        "albummid": "000lPTuJ1cXivI",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "<em>周深</em>  2025-05-26",
+        "docid": "4279527580602708042",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 67942845,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "梦见你",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M000000lPTuJ1cXivI_1.jpg",
+        "pic_icon": "",
+        "pmid": "000lPTuJ1cXivI_1",
+        "publish_date": "2025-05-26",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "<em>周深</em>",
+        "singer_id": "199509",
+        "singer_list": [
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            }
+        ],
+        "song_num": 1,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/45/album_67942845_0.json.z"
+    },
+    {
+        "albummid": "001GFaiV3EX8HC",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "<em>周深</em>/吴克群/陈卓璇/刘浩存/王安宇  2025-05-29",
+        "docid": "13836549758671573959",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 68241566,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "陷入我们的热恋 影视原声带",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M000001GFaiV3EX8HC_1.jpg",
+        "pic_icon": "",
+        "pmid": "001GFaiV3EX8HC_1",
+        "publish_date": "2025-05-29",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "<em>周深</em>/吴克群/陈卓璇/刘浩存/王安宇",
+        "singer_id": "199509;178;1565463;7075059;2173282",
+        "singer_list": [
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            },
+            {
+                "id": 178,
+                "instrument": 0,
+                "mid": "",
+                "name": "吴克群",
+                "rule": 0,
+                "title": "吴克群"
+            },
+            {
+                "id": 1565463,
+                "instrument": 0,
+                "mid": "",
+                "name": "陈卓璇",
+                "rule": 0,
+                "title": "陈卓璇"
+            },
+            {
+                "id": 7075059,
+                "instrument": 0,
+                "mid": "",
+                "name": "刘浩存",
+                "rule": 0,
+                "title": "刘浩存"
+            },
+            {
+                "id": 2173282,
+                "instrument": 0,
+                "mid": "",
+                "name": "王安宇",
+                "rule": 0,
+                "title": "王安宇"
+            }
+        ],
+        "song_num": 16,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/66/album_68241566_0.json.z"
+    },
+    {
+        "albummid": "0046NSip0O9n3B",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "雷佳/<em>周深</em>/吴克群/米卡/王赫野/希林娜依高/孟佳/苏运莹/刘恋/王靖雯  2024-06-15",
+        "docid": "1587505781987715515",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 51853803,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "玫瑰的故事 电视剧原声带",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M0000046NSip0O9n3B_2.jpg",
+        "pic_icon": "",
+        "pmid": "0046NSip0O9n3B_2",
+        "publish_date": "2024-06-15",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "雷佳/<em>周深</em>/吴克群/米卡/王赫野/希林娜依高/孟佳/苏运莹/刘恋/王靖雯",
+        "singer_id": "19903;199509;178;2812477;7960818;1518533;162964;945054;2144624;6016498",
+        "singer_list": [
+            {
+                "id": 19903,
+                "instrument": 0,
+                "mid": "",
+                "name": "雷佳",
+                "rule": 0,
+                "title": "雷佳"
+            },
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            },
+            {
+                "id": 178,
+                "instrument": 0,
+                "mid": "",
+                "name": "吴克群",
+                "rule": 0,
+                "title": "吴克群"
+            },
+            {
+                "id": 2812477,
+                "instrument": 0,
+                "mid": "",
+                "name": "米卡",
+                "rule": 0,
+                "title": "米卡"
+            },
+            {
+                "id": 7960818,
+                "instrument": 0,
+                "mid": "",
+                "name": "王赫野",
+                "rule": 0,
+                "title": "王赫野"
+            },
+            {
+                "id": 1518533,
+                "instrument": 0,
+                "mid": "",
+                "name": "希林娜依高",
+                "rule": 0,
+                "title": "希林娜依高"
+            },
+            {
+                "id": 162964,
+                "instrument": 0,
+                "mid": "",
+                "name": "孟佳",
+                "rule": 0,
+                "title": "孟佳"
+            },
+            {
+                "id": 945054,
+                "instrument": 0,
+                "mid": "",
+                "name": "苏运莹",
+                "rule": 0,
+                "title": "苏运莹"
+            },
+            {
+                "id": 2144624,
+                "instrument": 0,
+                "mid": "",
+                "name": "刘恋",
+                "rule": 0,
+                "title": "刘恋"
+            },
+            {
+                "id": 6016498,
+                "instrument": 0,
+                "mid": "",
+                "name": "王靖雯",
+                "rule": 0,
+                "title": "王靖雯"
+            }
+        ],
+        "song_num": 53,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/3/album_51853803_0.json.z"
+    },
+    {
+        "albummid": "00395Yrk0ggbW9",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "张碧晨/<em>周深</em>/徐佳莹/胡夏/杨丞琳/袁娅维TIA RAY/刘诗诗/张云龙/王天阳/李琦/杨秉音/周梓琦/王艺陶/秉音创声  2025-05-09",
+        "docid": "573983724683339238",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 67225240,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "淮水竹亭 影视原声带",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M00000395Yrk0ggbW9_1.jpg",
+        "pic_icon": "",
+        "pmid": "00395Yrk0ggbW9_1",
+        "publish_date": "2025-05-09",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "张碧晨/<em>周深</em>/徐佳莹/胡夏/杨丞琳/袁娅维TIA RAY/刘诗诗/张云龙/王天阳/李琦/杨秉音/周梓琦/王艺陶/秉音创声",
+        "singer_id": "199515;199509;16244;24833;4658;36691;34658;200067;1515298;164158;1092971;1311536;1373205;12218743",
+        "singer_list": [
+            {
+                "id": 199515,
+                "instrument": 0,
+                "mid": "",
+                "name": "张碧晨",
+                "rule": 0,
+                "title": "张碧晨"
+            },
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            },
+            {
+                "id": 16244,
+                "instrument": 0,
+                "mid": "",
+                "name": "徐佳莹",
+                "rule": 0,
+                "title": "徐佳莹"
+            },
+            {
+                "id": 24833,
+                "instrument": 0,
+                "mid": "",
+                "name": "胡夏",
+                "rule": 0,
+                "title": "胡夏"
+            },
+            {
+                "id": 4658,
+                "instrument": 0,
+                "mid": "",
+                "name": "杨丞琳",
+                "rule": 0,
+                "title": "杨丞琳"
+            },
+            {
+                "id": 36691,
+                "instrument": 0,
+                "mid": "",
+                "name": "袁娅维TIA RAY",
+                "rule": 0,
+                "title": "袁娅维TIA RAY"
+            },
+            {
+                "id": 34658,
+                "instrument": 0,
+                "mid": "",
+                "name": "刘诗诗",
+                "rule": 0,
+                "title": "刘诗诗"
+            },
+            {
+                "id": 200067,
+                "instrument": 0,
+                "mid": "",
+                "name": "张云龙",
+                "rule": 0,
+                "title": "张云龙"
+            },
+            {
+                "id": 1515298,
+                "instrument": 0,
+                "mid": "",
+                "name": "王天阳",
+                "rule": 0,
+                "title": "王天阳"
+            },
+            {
+                "id": 164158,
+                "instrument": 0,
+                "mid": "",
+                "name": "李琦",
+                "rule": 0,
+                "title": "李琦"
+            },
+            {
+                "id": 1092971,
+                "instrument": 0,
+                "mid": "",
+                "name": "杨秉音",
+                "rule": 0,
+                "title": "杨秉音"
+            },
+            {
+                "id": 1311536,
+                "instrument": 0,
+                "mid": "",
+                "name": "周梓琦",
+                "rule": 0,
+                "title": "周梓琦"
+            },
+            {
+                "id": 1373205,
+                "instrument": 0,
+                "mid": "",
+                "name": "王艺陶",
+                "rule": 0,
+                "title": "王艺陶"
+            },
+            {
+                "id": 12218743,
+                "instrument": 0,
+                "mid": "",
+                "name": "秉音创声",
+                "rule": 0,
+                "title": "秉音创声"
+            }
+        ],
+        "song_num": 57,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/40/album_67225240_0.json.z"
+    },
+    {
+        "albummid": "001ygY8z2vBQtB",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "李晨/郑恺/沙溢/白鹿/<em>周深</em>/范丞丞/宋雨琦 (YUQI)/张真源/孟子义/李昀锐/奔跑吧  2025-04-24",
+        "docid": "6515048828500967094",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 66507209,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "奔跑吧 第十三季",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M000001ygY8z2vBQtB_1.jpg",
+        "pic_icon": "",
+        "pmid": "001ygY8z2vBQtB_1",
+        "publish_date": "2025-04-24",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "李晨/郑恺/沙溢/白鹿/<em>周深</em>/范丞丞/宋雨琦 (YUQI)/张真源/孟子义/李昀锐/奔跑吧",
+        "singer_id": "26287;157542;950956;1529248;199509;2096857;2146802;1157831;3610990;3153149;2169488",
+        "singer_list": [
+            {
+                "id": 26287,
+                "instrument": 0,
+                "mid": "",
+                "name": "李晨",
+                "rule": 0,
+                "title": "李晨"
+            },
+            {
+                "id": 157542,
+                "instrument": 0,
+                "mid": "",
+                "name": "郑恺",
+                "rule": 0,
+                "title": "郑恺"
+            },
+            {
+                "id": 950956,
+                "instrument": 0,
+                "mid": "",
+                "name": "沙溢",
+                "rule": 0,
+                "title": "沙溢"
+            },
+            {
+                "id": 1529248,
+                "instrument": 0,
+                "mid": "",
+                "name": "白鹿",
+                "rule": 0,
+                "title": "白鹿"
+            },
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            },
+            {
+                "id": 2096857,
+                "instrument": 0,
+                "mid": "",
+                "name": "范丞丞",
+                "rule": 0,
+                "title": "范丞丞"
+            },
+            {
+                "id": 2146802,
+                "instrument": 0,
+                "mid": "",
+                "name": "宋雨琦 (YUQI)",
+                "rule": 0,
+                "title": "宋雨琦 (YUQI)"
+            },
+            {
+                "id": 1157831,
+                "instrument": 0,
+                "mid": "",
+                "name": "张真源",
+                "rule": 0,
+                "title": "张真源"
+            },
+            {
+                "id": 3610990,
+                "instrument": 0,
+                "mid": "",
+                "name": "孟子义",
+                "rule": 0,
+                "title": "孟子义"
+            },
+            {
+                "id": 3153149,
+                "instrument": 0,
+                "mid": "",
+                "name": "李昀锐",
+                "rule": 0,
+                "title": "李昀锐"
+            },
+            {
+                "id": 2169488,
+                "instrument": 0,
+                "mid": "",
+                "name": "奔跑吧",
+                "rule": 0,
+                "title": "奔跑吧"
+            }
+        ],
+        "song_num": 3,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/9/album_66507209_0.json.z"
+    },
+    {
+        "albummid": "000wkcxN2tLAPS",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "<em>周深</em>/萨顶顶/黄霄雲/井胧/白鹿/敖瑞鹏/蔡明希-不才/陆虎/衣睿/龚淑均  2025-01-12",
+        "docid": "10373674690191458725",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 61164939,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "白月梵星 影视原声带",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M000000wkcxN2tLAPS_1.jpg",
+        "pic_icon": "",
+        "pmid": "000wkcxN2tLAPS_1",
+        "publish_date": "2025-01-12",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "<em>周深</em>/萨顶顶/黄霄雲/井胧/白鹿/敖瑞鹏/蔡明希-不才/陆虎/衣睿/龚淑均",
+        "singer_id": "199509;8105;1012042;2061723;1529248;13512876;946110;11449;1528745;34985",
+        "singer_list": [
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            },
+            {
+                "id": 8105,
+                "instrument": 0,
+                "mid": "",
+                "name": "萨顶顶",
+                "rule": 0,
+                "title": "萨顶顶"
+            },
+            {
+                "id": 1012042,
+                "instrument": 0,
+                "mid": "",
+                "name": "黄霄雲",
+                "rule": 0,
+                "title": "黄霄雲"
+            },
+            {
+                "id": 2061723,
+                "instrument": 0,
+                "mid": "",
+                "name": "井胧",
+                "rule": 0,
+                "title": "井胧"
+            },
+            {
+                "id": 1529248,
+                "instrument": 0,
+                "mid": "",
+                "name": "白鹿",
+                "rule": 0,
+                "title": "白鹿"
+            },
+            {
+                "id": 13512876,
+                "instrument": 0,
+                "mid": "",
+                "name": "敖瑞鹏",
+                "rule": 0,
+                "title": "敖瑞鹏"
+            },
+            {
+                "id": 946110,
+                "instrument": 0,
+                "mid": "",
+                "name": "蔡明希-不才",
+                "rule": 0,
+                "title": "蔡明希-不才"
+            },
+            {
+                "id": 11449,
+                "instrument": 0,
+                "mid": "",
+                "name": "陆虎",
+                "rule": 0,
+                "title": "陆虎"
+            },
+            {
+                "id": 1528745,
+                "instrument": 0,
+                "mid": "",
+                "name": "衣睿",
+                "rule": 0,
+                "title": "衣睿"
+            },
+            {
+                "id": 34985,
+                "instrument": 0,
+                "mid": "",
+                "name": "龚淑均",
+                "rule": 0,
+                "title": "龚淑均"
+            }
+        ],
+        "song_num": 38,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/39/album_61164939_0.json.z"
+    },
+    {
+        "albummid": "001qk21F0HH0ai",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "<em>周深</em>/张含韵/黄子弘凡/蔡子伊/杨润泽/周以力  2025-05-21",
+        "docid": "16411713584899155902",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 67808369,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "韶华若锦 影视原声带",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M000001qk21F0HH0ai_1.jpg",
+        "pic_icon": "",
+        "pmid": "001qk21F0HH0ai_1",
+        "publish_date": "2025-05-21",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "<em>周深</em>/张含韵/黄子弘凡/蔡子伊/杨润泽/周以力",
+        "singer_id": "199509;1071;2343137;10161914;6252075;10446646",
+        "singer_list": [
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            },
+            {
+                "id": 1071,
+                "instrument": 0,
+                "mid": "",
+                "name": "张含韵",
+                "rule": 0,
+                "title": "张含韵"
+            },
+            {
+                "id": 2343137,
+                "instrument": 0,
+                "mid": "",
+                "name": "黄子弘凡",
+                "rule": 0,
+                "title": "黄子弘凡"
+            },
+            {
+                "id": 10161914,
+                "instrument": 0,
+                "mid": "",
+                "name": "蔡子伊",
+                "rule": 0,
+                "title": "蔡子伊"
+            },
+            {
+                "id": 6252075,
+                "instrument": 0,
+                "mid": "",
+                "name": "杨润泽",
+                "rule": 0,
+                "title": "杨润泽"
+            },
+            {
+                "id": 10446646,
+                "instrument": 0,
+                "mid": "",
+                "name": "周以力",
+                "rule": 0,
+                "title": "周以力"
+            }
+        ],
+        "song_num": 9,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/69/album_67808369_0.json.z"
+    },
+    {
+        "albummid": "001MeR6o0zz9pB",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "<em>周深</em>  2025-05-07",
+        "docid": "6139389531424336546",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 67153903,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "归来",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M000001MeR6o0zz9pB_1.jpg",
+        "pic_icon": "",
+        "pmid": "001MeR6o0zz9pB_1",
+        "publish_date": "2025-05-07",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "<em>周深</em>",
+        "singer_id": "199509",
+        "singer_list": [
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            }
+        ],
+        "song_num": 3,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/3/album_67153903_0.json.z"
+    },
+    {
+        "albummid": "0034qQXb3RyraV",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "<em>周深</em>/欧豪/张赫煊/周柯宇/李宛妲/金池/赵登凯/商潮  2025-03-10",
+        "docid": "5422715604312670739",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 63751078,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "北上 电视剧原声带",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M0000034qQXb3RyraV_3.jpg",
+        "pic_icon": "",
+        "pmid": "0034qQXb3RyraV_3",
+        "publish_date": "2025-03-10",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "<em>周深</em>/欧豪/张赫煊/周柯宇/李宛妲/金池/赵登凯/商潮",
+        "singer_id": "199509;163563;63938;5252049;3712377;6154;1237015;2278858",
+        "singer_list": [
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            },
+            {
+                "id": 163563,
+                "instrument": 0,
+                "mid": "",
+                "name": "欧豪",
+                "rule": 0,
+                "title": "欧豪"
+            },
+            {
+                "id": 63938,
+                "instrument": 0,
+                "mid": "",
+                "name": "张赫煊",
+                "rule": 0,
+                "title": "张赫煊"
+            },
+            {
+                "id": 5252049,
+                "instrument": 0,
+                "mid": "",
+                "name": "周柯宇",
+                "rule": 0,
+                "title": "周柯宇"
+            },
+            {
+                "id": 3712377,
+                "instrument": 0,
+                "mid": "",
+                "name": "李宛妲",
+                "rule": 0,
+                "title": "李宛妲"
+            },
+            {
+                "id": 6154,
+                "instrument": 0,
+                "mid": "",
+                "name": "金池",
+                "rule": 0,
+                "title": "金池"
+            },
+            {
+                "id": 1237015,
+                "instrument": 0,
+                "mid": "",
+                "name": "赵登凯",
+                "rule": 0,
+                "title": "赵登凯"
+            },
+            {
+                "id": 2278858,
+                "instrument": 0,
+                "mid": "",
+                "name": "商潮",
+                "rule": 0,
+                "title": "商潮"
+            }
+        ],
+        "song_num": 49,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/78/album_63751078_0.json.z"
+    },
+    {
+        "albummid": "000pHw2K355mzf",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "<em>周深</em>  2023-05-28",
+        "docid": "2460856805508114736",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 38438471,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "璀璨冒险人",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M000000pHw2K355mzf_1.jpg",
+        "pic_icon": "",
+        "pmid": "000pHw2K355mzf_1",
+        "publish_date": "2023-05-28",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "<em>周深</em>",
+        "singer_id": "199509",
+        "singer_list": [
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            }
+        ],
+        "song_num": 3,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/71/album_38438471_0.json.z"
+    },
+    {
+        "albummid": "003QuaIp499MBj",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "<em>周深</em>  2023-11-12",
+        "docid": "10681844171764072287",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 43781868,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "我以渺小爱你",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M000003QuaIp499MBj_4.jpg",
+        "pic_icon": "",
+        "pmid": "003QuaIp499MBj_4",
+        "publish_date": "2023-11-12",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "<em>周深</em>",
+        "singer_id": "199509",
+        "singer_list": [
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            }
+        ],
+        "song_num": 1,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/68/album_43781868_0.json.z"
+    },
+    {
+        "albummid": "0010lMkS0O2pq5",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "<em>周深</em>  2021-11-06",
+        "docid": "17869377109451422850",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 23247196,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "光亮",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M0000010lMkS0O2pq5_1.jpg",
+        "pic_icon": "",
+        "pmid": "0010lMkS0O2pq5_1",
+        "publish_date": "2021-11-06",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "<em>周深</em>",
+        "singer_id": "199509",
+        "singer_list": [
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            }
+        ],
+        "song_num": 2,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/96/album_23247196_0.json.z"
+    },
+    {
+        "albummid": "000WIrp03a7EaN",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "<em>周深</em>  2024-11-06",
+        "docid": "17635865399071705084",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 57924000,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "太阳升起的舞蹈 (La Danza Del Dios Sol)",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M000000WIrp03a7EaN_2.jpg",
+        "pic_icon": "",
+        "pmid": "000WIrp03a7EaN_2",
+        "publish_date": "2024-11-06",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "<em>周深</em>",
+        "singer_id": "199509",
+        "singer_list": [
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            }
+        ],
+        "song_num": 2,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/0/album_57924000_0.json.z"
+    },
+    {
+        "albummid": "0027tFco1kk7Yv",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "<em>周深</em>  2022-03-21",
+        "docid": "11296548668515222335",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 26157335,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "睡个好觉",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M0000027tFco1kk7Yv_1.jpg",
+        "pic_icon": "",
+        "pmid": "0027tFco1kk7Yv_1",
+        "publish_date": "2022-03-21",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "<em>周深</em>",
+        "singer_id": "199509",
+        "singer_list": [
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            }
+        ],
+        "song_num": 2,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/35/album_26157335_0.json.z"
+    },
+    {
+        "albummid": "000DWU8N34e5Dr",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "<em>周深</em>  2023-01-14",
+        "docid": "7381286874488063103",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 34378834,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "人是_",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M000000DWU8N34e5Dr_1.jpg",
+        "pic_icon": "",
+        "pmid": "000DWU8N34e5Dr_1",
+        "publish_date": "2023-01-14",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "<em>周深</em>",
+        "singer_id": "199509",
+        "singer_list": [
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            }
+        ],
+        "song_num": 2,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/34/album_34378834_0.json.z"
+    },
+    {
+        "albummid": "004OLQfC3d8bqt",
+        "audio_play": {
+            "is_big": 0,
+            "jump_type": 0,
+            "jump_url": "",
+            "play_count": "",
+            "play_icon": 0,
+            "play_num": 0,
+            "rank": "",
+            "schedule_status": "",
+            "tag": "",
+            "toplist": ""
+        },
+        "catch_song": "",
+        "category": "",
+        "core_album_config": {
+            "album_type": 0,
+            "award_label": "",
+            "show_priority": 0
+        },
+        "desc_detail": {
+            "desc": "",
+            "include_info": "",
+            "use_new_style": 0
+        },
+        "description": "<em>周深</em>/孟美岐/肖战/朱芸编  2019-09-18",
+        "docid": "1334567177832359548",
+        "hotness": {
+            "desc": "",
+            "icon_url": "",
+            "jump_type": 0,
+            "jump_url": ""
+        },
+        "hotness_desc": "",
+        "id": 7981965,
+        "is_intervene": 0,
+        "label_new": {
+            "fill_type": 0,
+            "label_list": []
+        },
+        "name": "诛仙I 电影原声带",
+        "page_rank": 0,
+        "pic": "http://y.gtimg.cn/music/photo_new/T002R180x180M000004OLQfC3d8bqt_2.jpg",
+        "pic_icon": "",
+        "pmid": "004OLQfC3d8bqt_2",
+        "publish_date": "2019-09-18",
+        "relainfo": {
+            "base_rela_info": {
+                "nothit_discount_score": 0,
+                "num_effect": 0,
+                "num_score": 0,
+                "text_factor": 0,
+                "text_level_effect": 0,
+                "text_level_score": 0,
+                "text_score": 0
+            },
+            "hitinfo": 0,
+            "is_synonym_recall": 0,
+            "num_rela_info": [],
+            "seg_hit_info": [],
+            "seg_rela_infos": [],
+            "text_or_selection": ""
+        },
+        "singer": "<em>周深</em>/孟美岐/肖战/朱芸编",
+        "singer_id": "199509;1527896;1060985;2163632",
+        "singer_list": [
+            {
+                "id": 199509,
+                "instrument": 0,
+                "mid": "",
+                "name": "周深",
+                "rule": 0,
+                "title": "<em>周深</em>"
+            },
+            {
+                "id": 1527896,
+                "instrument": 0,
+                "mid": "",
+                "name": "孟美岐",
+                "rule": 0,
+                "title": "孟美岐"
+            },
+            {
+                "id": 1060985,
+                "instrument": 0,
+                "mid": "",
+                "name": "肖战",
+                "rule": 0,
+                "title": "肖战"
+            },
+            {
+                "id": 2163632,
+                "instrument": 0,
+                "mid": "",
+                "name": "朱芸编",
+                "rule": 0,
+                "title": "朱芸编"
+            }
+        ],
+        "song_num": 36,
+        "tag_list": [],
+        "track_id": 0,
+        "url": "http://y.qq.com/v3/static/album/65/album_7981965_0.json.z"
+    }
+]

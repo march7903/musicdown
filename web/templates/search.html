@@ -20,7 +20,11 @@
         <td>{{ song.album_name }}</td>
         <td>{{ song.duration }}</td>
         <td>{{ song.formats }}</td>
-        <td><a class="button" href="/download/{{ song.mid }}">{% if use_light_mode %}直接下载{% else %}下载{% endif %}</a></td>
+        <td>
+            <a class="button" href="/download?mid={{ song.mid|urlencode }}&name={{ song.name|urlencode }}&singer={{ song.singers|urlencode }}&album={{ song.album_name|urlencode }}">
+                {% if use_light_mode %}直接下载{% else %}下载{% endif %}
+            </a>
+        </td>
     </tr>
     {% endfor %}
 </table>

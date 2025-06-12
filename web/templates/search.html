@@ -1,33 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Search Results</title>
-</head>
-<body>
-    <h1>Search Results</h1>
-    <form action="/search" method="get">
-        <input type="text" name="q" placeholder="Search song" required>
-        <button type="submit">Search</button>
-    </form>
-    {% if use_light_mode %}
-    <p style="color: green;">轻量下载模式：点击后浏览器直接下载。</p>
-    {% endif %}
-    <table border="1">
-        <tr><th>Title</th><th>Artists</th><th>Action</th></tr>
-        {% for song in songs %}
-        <tr>
-            <td>{{ song['name'] }}</td>
-            <td>{% for s in song['singer'] %}{{ s['name'] }} {% endfor %}</td>
-            <td>
-                <a href="/download/{{ song['mid'] }}">
-                    {% if use_light_mode %}Direct Download{% else %}Download{% endif %}
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    <p><a href="/">Home</a></p>
-</body>
-</html>
-
+{% extends 'base.html' %}
+{% block title %}Search Results{% endblock %}
+{% block content %}
+<h1>Search Results</h1>
+<form action="/search" method="get" class="search-form">
+    <input type="text" name="q" placeholder="Search song" value="{{ query }}" required>
+    <button type="submit">Search</button>
+</form>
+{% if use_light_mode %}
+<p class="info">轻量下载模式：点击后浏览器直接下载。</p>
+{% endif %}
+<table class="result-table">
+    <tr>
+        <th>标题</th><th>歌手</th><th>专辑</th><th>时长</th><th>格式</th><th>操作</th>
+    </tr>
+    {% for song in songs %}
+    <tr>
+        <td>{{ song.name }}</td>
+        <td>{{ song.singers }}</td>
+        <td>{{ song.album_name }}</td>
+        <td>{{ song.duration }}</td>
+        <td>{{ song.formats }}</td>
+        <td><a class="button" href="/download/{{ song.mid }}">{% if use_light_mode %}直接下载{% else %}下载{% endif %}</a></td>
+    </tr>
+    {% endfor %}
+</table>
+<p><a href="/">Home</a></p>
+{% endblock %}

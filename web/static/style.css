@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    color: #333;
+}
+.container {
+    width: 80%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.search-form, .info {
+    margin-top: 20px;
+}
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.result-table th, .result-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+.result-table th {
+    background-color: #f0f0f0;
+}
+a.button {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+}
+a.button:hover {
+    background-color: #0056b3;
+}

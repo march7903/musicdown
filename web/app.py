@@ -12,6 +12,11 @@ from pathlib import Path
 import asyncio
 import io
 
+import sys
+# 确保可以导入项目根目录的模块
+if __name__ == "__main__":
+    sys.path.append(str(Path(__file__).resolve().parent.parent))
+
 from api.qqmusic import QQMusicAPI
 from downloader.music_downloader import MusicDownloader
 from utils.config import config
@@ -160,3 +165,7 @@ async def download(mid: str):
         return JSONResponse({"error": "Download failed"}, status_code=500)
     return FileResponse(path, filename=path.name)
 
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app)

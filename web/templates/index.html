@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Music Downloader</title>
+</head>
+<body>
+    <h1>Music Downloader</h1>
+    <form action="/search" method="get">
+        <input type="text" name="q" placeholder="Search song" required>
+        <button type="submit">Search</button>
+    </form>
+    {% if use_light_mode %}
+    <p style="color: green;">轻量下载模式已启用，文件将由浏览器直接下载。</p>
+    {% endif %}
+    <p><a href="/login">重新登录</a></p>
+</body>
+</html>

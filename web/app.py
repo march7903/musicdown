@@ -147,12 +147,14 @@ async def search(request: Request, q: str = ""):
     )
 
 
-@app.get("/download/{mid}")
-async def download(mid: str):
-    detail = await qq_api.song_detail(mid)
-    if detail.get("code") != 0:
-        return JSONResponse({"error": "Song not found"}, status_code=404)
-    song_info = detail.get("data")
+@app.get("/download")
+async def download(mid: str, name: str, singer: str, album: str):
+    song_info = {
+        "mid": mid,
+        "name": name,
+        "singer": [{"name": singer}],
+        "album": {"name": album, "mid": ""},
+    }
     if config.LIGHT_DOWNLOAD_MODE:
         song_url_result = await qq_api.song_url(song_info["mid"], config.DEFAULT_QUALITY)
         if song_url_result.get("code") == 0 and song_url_result.get("url"):

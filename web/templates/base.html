@@ -1,13 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Music Downloader{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎵</text></svg>">
 </head>
 <body>
-<div class="container">
-{% block content %}{% endblock %}
-</div>
+    <div class="container">
+        <header>
+            {% block header %}{% endblock %}
+        </header>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        <footer>
+            <p style="text-align: center; margin-top: 30px; color: #777; font-size: 0.9rem;">
+                &copy; 2025 Music Downloader | <a href="/" class="nav-link">首页</a>
+            </p>
+        </footer>
+    </div>
 </body>
 </html>

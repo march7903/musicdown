@@ -1,32 +1,102 @@
 {% extends 'base.html' %}
-{% block title %}Search Results{% endblock %}
+{% block title %}搜索结果 - Music Downloader{% endblock %}
+
+{% block header %}
+<h1><i class="fas fa-search"></i> 搜索结果</h1>
+{% endblock %}
+
 {% block content %}
-<h1>Search Results</h1>
-<form action="/search" method="get" class="search-form">
-    <input type="text" name="q" placeholder="Search song" value="{{ query }}" required>
-    <button type="submit">Search</button>
-</form>
-{% if use_light_mode %}
-<p class="info">轻量下载模式：点击后浏览器直接下载。</p>
-{% endif %}
-<table class="result-table">
-    <tr>
-        <th>标题</th><th>歌手</th><th>专辑</th><th>时长</th><th>格式</th><th>操作</th>
-    </tr>
-    {% for song in songs %}
-    <tr>
-        <td>{{ song.name }}</td>
-        <td>{{ song.singers }}</td>
-        <td>{{ song.album_name }}</td>
-        <td>{{ song.duration }}</td>
-        <td>{{ song.formats }}</td>
-        <td>
-            <a class="button" href="/download?mid={{ song.mid|urlencode }}&name={{ song.name|urlencode }}&singer={{ song.singers|urlencode }}&album={{ song.album_name|urlencode }}">
-                {% if use_light_mode %}直接下载{% else %}下载{% endif %}
-            </a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
-<p><a href="/">Home</a></p>
+<div class="card">
+    <form action="/search" method="get" class="search-form">
+        <input type="text" name="q" placeholder="搜索歌曲、歌手或专辑..." value="{{ query }}" required>
+        <button type="submit"><i class="fas fa-search"></i> 搜索</button>
+        </form>
+
+    {% if use_light_mode %}
+    <div class="info">
+        <i class="fas fa-info-circle"></i> 轻量下载模式：点击后浏览器直接下载音乐文件。
+    </div>
+    {% endif %}
+    {% if songs %}
+    <div style="overflow-x: auto;">
+        <table class="result-table">
+            <thead>
+                <tr>
+                    <th><i class="fas fa-music"></i> 标题</th>
+                    <th><i class="fas fa-user"></i> 歌手</th>
+                    <th><i class="fas fa-compact-disc"></i> 专辑</th>
+                    <th><i class="fas fa-clock"></i> 时长</th>
+                    <th><i class="fas fa-file-audio"></i> 可用格式</th>
+                    <th><i class="fas fa-sliders-h"></i> 音质选择</th>
+                    <th><i class="fas fa-download"></i> 操作</th>
+                    </tr>
+            </thead>
+            <tbody>
+                {% for song in songs %}
+                <tr>
+                    <td>{{ song.name }}</td>
+                    <td>{{ song.singers }}</td>
+                    <td>{{ song.album_name }}</td>
+                    <td>{{ song.duration }}</td>
+                    <td>{{ song.formats }}</td>
+                    <td>
+                        <select id="quality-{{ song.mid }}" class="quality-select"
+                            style="padding: 5px; border-radius: 4px; border: 1px solid var(--border-color);">
+                            {% for format in song.available_formats %}
+                            <option value="{{ format.quality }}" {% if format.quality==default_quality %}selected{% endif %}>
+                                {{ format.name }}
+                            </option>
+                            {% endfor %}
+                            {% if not song.available_formats %}
+                            <option value="flac">FLAC</option>
+                            <option value="320">MP3 320k</option>
+                            <option value="128">MP3 128k</option>
+                            {% endif %}
+                        </select>
+                        </td>
+                        <td>
+                            <a class="button download-button" href="#" data-mid="{{ song.mid }}" data-name="{{ song.name }}"
+                                data-singer="{{ song.singers }}" data-album="{{ song.album_name }}">
+                                <i class="fas fa-download"></i> 下载
+                            </a>
+                        </td>
+                        </tr>
+                        {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const downloadButtons = document.querySelectorAll('.download-button');
+
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const mid = this.getAttribute('data-mid');
+                    const name = this.getAttribute('data-name');
+                    const singer = this.getAttribute('data-singer');
+                    const album = this.getAttribute('data-album');
+                    const quality = document.getElementById(`quality-${mid}`).value;
+
+                    const downloadUrl = `/download?mid=${encodeURIComponent(mid)}&name=${encodeURIComponent(name)}&singer=${encodeURIComponent(singer)}&album=${encodeURIComponent(album)}&quality=${encodeURIComponent(quality)}`;
+
+                    window.location.href = downloadUrl;
+                });
+            });
+        });
+    </script>
+    {% else %}
+    <div style="text-align: center; padding: 30px 0;">
+        {% if query %}
+        <p><i class="fas fa-exclamation-triangle"></i> 没有找到相关歌曲，请尝试其他关键词。</p>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    <div style="margin-top: 20px; text-align: center;">
+        <a href="/" class="button"><i class="fas fa-home"></i> 返回首页</a>
+    </div>
+    </div>
 {% endblock %}

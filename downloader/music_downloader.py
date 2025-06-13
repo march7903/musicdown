@@ -42,6 +42,11 @@ class MusicDownloader:
         self.log(f"开始下载歌曲: {song_name} - {singers}")
 
         try:
+            # 确保下载目录存在
+            if not download_dir.exists():
+                self.log(f"下载目录不存在，正在创建: {download_dir}")
+                download_dir.mkdir(parents=True, exist_ok=True)
+
             # 1. 获取歌曲URL
             self.log("正在获取下载链接...")
 

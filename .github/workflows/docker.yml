@@ -29,5 +29,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_REPOSITORY }}:latest
+          tags: ${{ secrets.DOCKER_USERNAME || github.repository_owner }}/musicdown:latest
 

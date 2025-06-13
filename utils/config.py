@@ -94,8 +94,8 @@ class Config:
         # 登录相关配置
         self.AUTO_LOGIN = self.config_file.get("login.auto_login", False)
         self.LOGIN_TYPE = self.config_file.get("login.type", "qr")
-        # 轻量下载模式通过环境变量控制，默认为False
-        env_val = os.getenv("USE_LIGHT_DOWNLOAD_MODE", "false")
+        # 轻量下载模式通过环境变量控制，默认为true
+        env_val = os.getenv("USE_LIGHT_DOWNLOAD_MODE", "true")
         self.LIGHT_DOWNLOAD_MODE = env_val.lower() == "true"
 
     def set_login_config(self, auto_login: bool = False, login_type: str = "qr"):

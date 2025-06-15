@@ -35,6 +35,17 @@ qr_bytes = b""
 login_status = "not_started"
 login_task: asyncio.Task | None = None
 
+# 应用启动事件
+
+
+@app.on_event("startup")
+async def startup_event():
+    # 启动时异步验证凭证
+    await qq_api.validate_credential()
+    global login_status
+    if await qq_api.is_logged_in():
+        login_status = "success"
+
 
 def login_callback(event: str, data):
     global qr_bytes, login_status
@@ -47,6 +58,7 @@ def login_callback(event: str, data):
         login_status = "waiting_confirm"
     elif event == "login_success":
         login_status = "success"
+        qq_api.credential = data
     elif event in {"timeout", "refused", "error"}:
         login_status = event
 
@@ -100,6 +112,10 @@ async def index(request: Request):
 
 @app.get("/login", response_class=HTMLResponse)
 async def login(request: Request):
+    # 如果已经登录，直接重定向到首页
+    if await qq_api.is_logged_in():
+        return RedirectResponse("/")
+
     global login_task, login_status
     if login_task is None or login_task.done():
         login_status = "starting"
@@ -116,6 +132,9 @@ async def login_qrcode():
 
 @app.get("/login/status")
 async def login_status_api():
+    # 如果登录成功，确保凭证已正确加载
+    if login_status == "success":
+        await qq_api.validate_credential()
     return {"status": login_status, "user": qq_api.get_user_info()}
 
 

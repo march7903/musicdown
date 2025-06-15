@@ -61,7 +61,7 @@ class ConfigManager:
 
 @dataclass
 class Config:
-    config_file = ConfigManager.get_instance("config.json")
+    config_file = ConfigManager.get_instance("config/config.json")
     DOWNLOADS_DIR: Path = field(default=Path('downloads'))
     DEFAULT_QUALITY: str = field(init=False)
     BLOCK_SIZE: int = 8192

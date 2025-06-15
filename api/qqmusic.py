@@ -31,7 +31,7 @@ class QQMusicAPI:
                 "qqmusic-api-python 库未安装，请先安装: pip install qqmusic-api-python")
 
         self.credential: Optional[Credential] = None
-        self.credential_file = Path("credential.json")
+        self.credential_file = Path("config/credential.json")
         self._load_credential_basic()
 
     def _load_credential_basic(self):

@@ -22,6 +22,7 @@ from api.qqmusic import QQMusicAPI
 from downloader.music_downloader import MusicDownloader
 from utils.config import config
 from utils.formatters import format_singers, format_interval, clean_html_tags
+from utils.logger import logger
 
 app = FastAPI(title="Music Downloader Web")
 BASE_DIR = Path(__file__).parent
@@ -41,10 +42,18 @@ login_task: asyncio.Task | None = None
 @app.on_event("startup")
 async def startup_event():
     # 启动时异步验证凭证
-    await qq_api.validate_credential()
-    global login_status
-    if await qq_api.is_logged_in():
-        login_status = "success"
+    try:
+        await qq_api.validate_credential()
+        global login_status
+        if await qq_api.is_logged_in():
+            login_status = "success"
+            logger.info("已成功加载登录凭证")
+        else:
+            login_status = "not_started"
+            logger.warning("未找到有效的登录凭证或凭证已过期")
+    except Exception as e:
+        logger.error(f"验证凭证时出错: {e}")
+        login_status = "not_started"
 
 
 def login_callback(event: str, data):
@@ -58,7 +67,8 @@ def login_callback(event: str, data):
         login_status = "waiting_confirm"
     elif event == "login_success":
         login_status = "success"
-        qq_api.credential = data
+        # 登录成功后更新凭证并保存到文件
+        qq_api.save_credential(data)
     elif event in {"timeout", "refused", "error"}:
         login_status = event
 

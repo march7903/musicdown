@@ -31,7 +31,8 @@ class QQMusicAPI:
                 "qqmusic-api-python 库未安装，请先安装: pip install qqmusic-api-python")
 
         self.credential: Optional[Credential] = None
-        self.credential_file = Path("config/credential.json")
+        # 使用绝对路径确保在任何环境下都能正确找到凭证文件
+        self.credential_file = Path("config/credential.json").absolute()
         self._load_credential_basic()
 
     def _load_credential_basic(self):
@@ -87,6 +88,9 @@ class QQMusicAPI:
         """保存登录凭证"""
         self.credential = credential
         try:
+            # 确保目录存在
+            self.credential_file.parent.mkdir(parents=True, exist_ok=True)
+
             data = credential.as_dict()
             with open(self.credential_file, 'w', encoding='utf-8') as f:
                 json.dump(data, f, indent=2, ensure_ascii=False)

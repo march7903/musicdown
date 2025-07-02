@@ -50,7 +50,7 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
             search_result['songs'])
 
         await status_message.edit_text(
-            "🔍 搜索结果:",
+            text,
             reply_markup=keyboard
         )
 

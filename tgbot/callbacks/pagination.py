@@ -49,7 +49,7 @@ async def handle_pagination(update: Update, context: ContextTypes.DEFAULT_TYPE):
             # 更新消息
             text, keyboard = build_search_results_message(
                 search_result['songs'])
-            await callback_query.message.edit_text("🔍 搜索结果:", reply_markup=keyboard)
+            await callback_query.message.edit_text(text, reply_markup=keyboard)
 
         except Exception as e:
             await callback_query.answer(f"加载下一页失败: {str(e)}")
